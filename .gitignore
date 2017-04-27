@@ -1,0 +1,6 @@
+*.pyc
+.ropeproject
+ops/.vagrant
+ops/inventories/*
+!ops/inventories/example
+playbook.retry

@@ -1,0 +1,8 @@
+---
+domain_name: example.com
+
+# Generate a good password
+dbpassword:
+
+# Make this a really random and long string
+django_secret:

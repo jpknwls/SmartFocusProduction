@@ -1,0 +1,128 @@
+---
+- hosts: all
+
+
+  vars:
+    target_type: dev
+    user: vagrant
+    group: vagrant
+    project_home: /home/vagrant/app
+    django_debug: false
+
+
+  vars_files:
+    - vars.yaml
+    - "{{ inventory_dir }}/vars.yaml"
+
+
+  tasks:
+
+    - name: update apt cache
+      become: true
+      apt: update_cache=yes
+      tags: system
+
+    - name: install basic apt packages
+      become: true
+      apt: name={{ item }} state=present
+      with_items:
+        - vim
+        - nginx
+        - python-dev
+        - python-pip
+        - libpq-dev
+        - gunicorn
+      tags: system
+
+
+
+
+    - name: disable default nginx vhost
+      become: true
+      file: path=/etc/nginx/sites-enabled/default state=absent
+      tags: nginx
+
+    - name: create our nginx vhost
+      become: true
+      template:
+        src=templates/nginx_vhost.conf.j2
+        dest=/etc/nginx/sites-available/{{ appname }}
+      tags: nginx
+
+    - name: symlink our nginx vhost
+      become: true
+      file:
+        src=/etc/nginx/sites-available/{{ appname }}
+        dest=/etc/nginx/sites-enabled/{{ appname }} state=link
+      notify:
+        - restart nginx
+      tags: nginx
+
+    - name: start nginx
+      become: true
+      service: name=nginx state=started
+      tags: nginx
+
+
+
+
+    - name: install pip requirements
+      become: true
+      pip: requirements={{ project_home }}/src/ops/requirements.txt
+      tags: webapp, pip-deps
+
+    - name: provide django settings
+      template:
+        src=templates/django_settings.py.j2
+        dest={{ project_home }}/src/{{ appname }}/settings.py
+      tags: webapp, django-settings
+
+
+
+
+    - name: create dir for gunicorn's socket file
+      become: true
+      file: state=directory path=/var/run/gunicorn
+      tags: gunicorn
+
+    - name: install gunicorn
+      become: true
+      pip: name=gunicorn
+      tags: gunicorn
+
+    - name: configure gunicorn
+      become: true
+      template:
+        src=templates/gunicorn_app.py.j2
+        dest=/etc/gunicorn.d/{{ appname }}.conf
+      notify:
+        - restart gunicorn
+      tags: gunicorn
+
+    - name: reload gunicorn
+      service: name=gunicorn state=restarted
+      become: true
+      tags: on-code-change
+
+
+
+
+    - name: set in place db schema
+      django_manage:
+        app_path={{ project_home }}/src
+        command={{ item }}
+      with_items:
+        - migrate
+      tags: webapp, django-commands
+
+
+
+
+  handlers:
+    - name: restart nginx
+      become: true
+      service: name=nginx state=restarted
+
+    - name: restart gunicorn
+      become: true
+      service: name=gunicorn state=restarted

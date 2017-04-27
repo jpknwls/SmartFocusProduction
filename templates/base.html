@@ -1,0 +1,39 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>{% block window_title_text %}SmartFocus{% endblock %}</title>
+
+    {% block extra_head %}{% endblock %}
+
+</head>
+
+<body>
+
+    <h1>{% block page_header_text %}{% endblock %}</h1>
+
+    {% block main %}{% endblock %}
+
+    <nav>
+        <ul>
+            {% for store in stores %}
+            <li>
+                {{ store }}
+
+                <ul>
+                    {% for sp in store.store_pages.all %}
+                    <li>
+                        <a href="{% url 'store_page' store.id sp.page.slug %}"
+                            >{{ sp.page.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+</body>
