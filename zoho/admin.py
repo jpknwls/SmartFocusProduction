@@ -6,7 +6,9 @@ from . import models
 
 
 class PageAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'priority', 'iframe_url', )
+
+    prepopulated_fields = {'slug': ('title', )}
 
 
 admin.site.register(models.Page, PageAdmin)
