@@ -5,18 +5,19 @@ from django.contrib import admin
 from . import models
 
 
+class StorePageInline(admin.TabularInline):
+    model = models.StorePage
+
+
 class RegionAdmin(admin.ModelAdmin):
     pass
 
 
 class StoreAdmin(admin.ModelAdmin):
-    pass
-
-
-class StorePageAdmin(admin.ModelAdmin):
-    pass
+    inlines = [
+        StorePageInline,
+    ]
 
 
 admin.site.register(models.Region, RegionAdmin)
 admin.site.register(models.Store, StoreAdmin)
-admin.site.register(models.StorePage, StorePageAdmin)

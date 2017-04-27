@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -10,12 +12,25 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^$', views.home,
+    url(r'^login/',
+        auth_views.LoginView.as_view(template_name='login.html'),
+        name='login'),
+
+    url(r'^logout/',
+        auth_views.logout_then_login,
+        name='logout'),
+
+    url(r'^$',
+        login_required(views.home),
         name='home'),
 
-    url(r'^stores/(?P<store_id>\d+)/(?P<page_slug>[-\w]+)/$', views.store_page,
+    # Store-specific pages
+    url(r'^stores/(?P<store_id>\d+)/(?P<page_slug>[-\w]+)/$',
+        login_required(views.store_page),
         name='store_page'),
 
-    url(r'^(?P<page_slug>\d+)/$', views.page,
+    # Chain-wide pages
+    url(r'^(?P<page_slug>\d+)/$',
+        login_required(views.page),
         name='page'),
 ]

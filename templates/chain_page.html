@@ -1,0 +1,7 @@
+{% extends "generic_page.html" %}
+
+{% block window_title_text %}{{ page.title }} — {{ block.super }}{% endblock %}
+
+{% block page_header_text %}{{ page.title }}{% endblock %}
+
+{% block iframe_url %}{{ page.iframe_url }}{% endblock %}

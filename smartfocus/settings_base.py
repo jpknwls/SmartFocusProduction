@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 """
 Django settings for smartfocus project.
 
@@ -16,14 +19,9 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+# Django settings
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'okagyg@%m=d3ancg@8^nw+z9nuten6(_sdxl1udqz%t9&@&6-)'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -52,6 +50,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'smartfocus.urls'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+
 
 TEMPLATES = [
     {
@@ -64,6 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'smartfocus.context_processors.managed_stores',
+                'smartfocus.context_processors.managed_stores',
             ],
         },
     },

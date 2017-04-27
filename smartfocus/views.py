@@ -8,10 +8,7 @@ from zoho.models import Page
 
 
 def home(request, *args, **kwargs):
-    return render(request, 'home.html', dict(
-        pages=Page.objects.filter(iframe_url__isnull=True),
-        stores=Store.objects.all(),
-    ))
+    return render(request, 'home.html')
 
 
 def store_page(request, store_id, page_slug, *args, **kwargs):

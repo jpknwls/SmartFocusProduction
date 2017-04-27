@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "generic_page.html" %}
 
 {% block window_title_text %}{{ page.title }} — {{ store.name }} — {{ block.super }}{% endblock %}
 
@@ -7,12 +7,4 @@
     <small>{{ store.name }}</small>
 {% endblock %}
 
-{% block main %}
-    <iframe
-        height="900px"
-        width="100%"
-        frameborder="0"
-        allowTransparency="true"
-        scrolling="auto"
-        src="{{ store_page.iframe_url }}"></iframe>
-{% endblock %}
+{% block iframe_url %}{{ store_page.iframe_url }}{% endblock %}

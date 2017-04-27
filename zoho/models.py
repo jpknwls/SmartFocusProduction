@@ -13,7 +13,7 @@ class Page(models.Model):
         help_text=
             "If page is store-specific, leave iframe URL empty here. "
             "You’ll be able to assign this page to the store "
-            "with specific iframe URL on store edit page.")
+            "and add iframe URL on store edit page.")
 
     priority = models.PositiveIntegerField(
         default=1,
@@ -25,5 +25,12 @@ class Page(models.Model):
 
     slug = models.SlugField(unique=True)
 
+    class Meta:
+        ordering = ['priority']
+
     def __unicode__(self):
         return self.title
+
+
+def get_chain_wide_pages():
+    return Page.objects.filter(iframe_url__isnull=False)

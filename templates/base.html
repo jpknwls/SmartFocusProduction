@@ -5,17 +5,26 @@
 <head>
 
     <meta charset="utf-8">
+
     <title>{% block window_title_text %}SmartFocus{% endblock %}</title>
+
+    <style>
+        body {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            display: flex;
+            flex-flow: column nowrap;
+        }
+        main {
+            flex: 2;
+        }
+    </style>
 
     {% block extra_head %}{% endblock %}
 
 </head>
 
 <body>
-
-    <h1>{% block page_header_text %}{% endblock %}</h1>
-
-    {% block main %}{% endblock %}
 
     <nav>
         <ul>
@@ -35,5 +44,13 @@
             {% endfor %}
         </ul>
     </nav>
+
+    <header>
+        <h1>{% block page_header_text %}{% endblock %}</h1>
+    </header>
+
+    <main>
+        {% block main %}{% endblock %}
+    </main>
 
 </body>
