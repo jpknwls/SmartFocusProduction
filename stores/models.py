@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.db.models import Q
 
+from zoho.models import STORE_SPECIFIC_PAGES_QUERY
+
 
 class Region(models.Model):
     manager = models.ForeignKey(
@@ -41,7 +43,7 @@ class StorePage(models.Model):
 
     page = models.ForeignKey(
         'zoho.Page',
-        limit_choices_to={'iframe_url__isnull': True})
+        limit_choices_to=STORE_SPECIFIC_PAGES_QUERY)
 
     iframe_url = models.URLField()
 

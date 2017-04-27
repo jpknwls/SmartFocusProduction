@@ -33,4 +33,12 @@ class Page(models.Model):
 
 
 def get_chain_wide_pages():
-    return Page.objects.filter(iframe_url__isnull=False)
+    return Page.objects.filter(**CHAIN_WIDE_PAGES_QUERY)
+
+
+def get_store_specific_pages():
+    return Page.objects.filter(**STORE_SPECIFIC_PAGES_QUERY)
+
+
+STORE_SPECIFIC_PAGES_QUERY = dict(iframe_url__isnull=True)
+CHAIN_WIDE_PAGES_QUERY = dict(iframe_url__isnull=False)
