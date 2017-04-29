@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from . import models
-from zoho.models import get_store_specific_pages
+from zoho.models import Page
 
 
 class StorePageInline(admin.TabularInline):
@@ -24,7 +24,8 @@ class StoreAdmin(admin.ModelAdmin):
     ]
 
     def has_all_pages_configured(self, obj):
-        return len(obj.store_pages.all()) == len(get_store_specific_pages())
+        expected_page_num = len(Page.objects.filter(level='STORE_LEVEL'))
+        return len(obj.store_pages.all()) == expected_page_num
     has_all_pages_configured.short_description = "Has all pages configured?"
     has_all_pages_configured.boolean = True
 

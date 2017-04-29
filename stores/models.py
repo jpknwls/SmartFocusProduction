@@ -4,8 +4,6 @@ from __future__ import unicode_literals
 from django.db import models
 from django.db.models import Q
 
-from zoho.models import STORE_SPECIFIC_PAGES_QUERY
-
 
 class Region(models.Model):
     manager = models.ForeignKey(
@@ -43,13 +41,14 @@ class StorePage(models.Model):
 
     page = models.ForeignKey(
         'zoho.Page',
-        limit_choices_to=STORE_SPECIFIC_PAGES_QUERY)
+        limit_choices_to={'level': 'STORE_LEVEL'},
+        related_name='store_pages')
 
-    iframe_url = models.URLField()
+    iframe_urls = models.TextField(
+        help_text="One store-specific URL per line, no spaces.")
 
     class Meta:
         unique_together = ('page', 'store')
-        ordering = ['page__priority']
 
     def __unicode__(self):
         return "{page} for {store}".format(
@@ -57,5 +56,14 @@ class StorePage(models.Model):
             store=unicode(self.store))
 
 
-def get_stores_managed_by(user):
+def get_managed_stores(user):
+    """
+    Returns a QuerySet of ``Store`` instances
+    according to user’s management role.
+    """
     return Store.objects.filter(Q(region__manager=user) | Q(manager=user))
+
+
+def is_manager(user, store):
+    """Returns ``True`` if ``store`` is managed by ``user``."""
+    return store.manager == user or store.region.manager == user

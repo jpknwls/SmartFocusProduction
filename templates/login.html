@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block window_title_text %}Login — {{ block.super }}{% endblock %}
+
+{% block main %}
+
+    <form action="{% url "login" %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+
+{% endblock %}

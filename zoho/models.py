@@ -1,44 +1,83 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import os
+
 from django.db import models
+from django.dispatch import receiver
 
 
 class Page(models.Model):
-    """Page with an iframe view into a Zoho table."""
+    """Page with iframe-based view(s) into Zoho."""
 
-    iframe_url = models.URLField(
-        null=True,
-        blank=True,
-        help_text=
-            "If page is store-specific, leave iframe URL empty here. "
-            "You’ll be able to assign this page to the store "
-            "and add iframe URL on store edit page.")
-
-    priority = models.PositiveIntegerField(
-        default=1,
-        help_text="Pages with higher priority appear first in lists.")
+    level = models.CharField(
+        default='CHAIN_LEVEL',
+        max_length=20,
+        choices=(
+            ('CHAIN_LEVEL', 'Chain-level'),
+            ('STORE_LEVEL', 'Store-level'),
+        ))
 
     title = models.CharField(
         max_length=255,
-        help_text="For example, <tt>View inventory</tt>.")
+        unique=True,
+        help_text=
+            "Title shown to the user. Example: <tt>入库</tt>")
 
-    slug = models.SlugField(unique=True)
+    description = models.TextField(
+        default="",
+        help_text=
+            "Optional. Short description to show the user where appropriate.")
 
-    class Meta:
-        ordering = ['priority']
+    slug = models.SlugField(
+        unique=True,
+        help_text=
+            "Short English identifier. "
+            "Used in URLs and to show appropriate icon.<br>"
+            "Example: <tt>newinventory</tt>")
+
+    iframe_urls = models.TextField(
+        default="",
+        help_text=
+            "One URL per line, no spaces.<br>"
+            "NOTE: If this page is store-level, leave URLs empty. "
+            "Use <b>Store Edit</b> page to add this page to stores "
+            "and provide store-specific URLs.")
 
     def __unicode__(self):
         return self.title
 
-
-def get_chain_wide_pages():
-    return Page.objects.filter(**CHAIN_WIDE_PAGES_QUERY)
-
-
-def get_store_specific_pages():
-    return Page.objects.filter(**STORE_SPECIFIC_PAGES_QUERY)
+    @property
+    def icon_path(self):
+        return 'images/{0}.png'.format(self.slug)
 
 
-STORE_SPECIFIC_PAGES_QUERY = dict(iframe_url__isnull=True)
-CHAIN_WIDE_PAGES_QUERY = dict(iframe_url__isnull=False)
+# # These two auto-delete icons from filesystem when they are unneeded:
+#
+# @receiver(models.signals.post_delete, sender=Page)
+# def auto_delete_file_on_delete(sender, instance, **kwargs):
+#     """
+#     Deletes icon from filesystem
+#     when corresponding ``Page`` object is deleted.
+#     """
+#     if instance.file:
+#         if os.path.isfile(instance.file.path):
+#             os.remove(instance.file.path)
+#
+# @receiver(models.signals.pre_save, sender=Page)
+# def auto_delete_file_on_change(sender, instance, **kwargs):
+#     """Deletes icon from filesystem
+#     when corresponding ``Page`` object is changed.
+#     """
+#     if not instance.pk:
+#         return False
+#
+#     try:
+#         old_file = Page.objects.get(pk=instance.pk).file
+#     except Page.DoesNotExist:
+#         return False
+#
+#     new_file = instance.file
+#     if not old_file == new_file:
+#         if os.path.isfile(old_file.path):
+#             os.remove(old_file.path)

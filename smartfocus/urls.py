@@ -25,6 +25,10 @@ urlpatterns = [
         name='home'),
 
     # Store-specific pages
+    url(r'^stores/(?P<store_id>\d+)$',
+        login_required(views.store_home),
+        name='store_home'),
+
     url(r'^stores/(?P<store_id>\d+)/(?P<page_slug>[-\w]+)/$',
         login_required(views.store_page),
         name='store_page'),

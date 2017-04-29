@@ -6,7 +6,9 @@ from . import models
 
 
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'priority', 'iframe_url', )
+    list_display = ('title', 'slug', )
+
+    fields = ('level', ('title', 'slug'), 'description', 'iframe_urls', )
 
     prepopulated_fields = {'slug': ('title', )}
 

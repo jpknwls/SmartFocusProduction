@@ -1,0 +1,70 @@
+<li class="logo">
+    <a href="{% url "home" %}">
+        <img src="{% static "images/jiaodianlogo.png" %}">
+    </a>
+</li>
+
+<li class="dropdown">
+    <a href="javascript: void 0;">
+        <img src="{% static "images/store.png" %}">
+        {{ active_store.name|default:"商店" }}
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        {% for store in managed_stores %}
+        <li class="
+            {% if store.id == active_store_id %}active{% endif %}
+            ">
+            <a href="{% url 'store_home' store.id %}">{{ store.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</li>
+
+{% for page in pages_top %}
+    {% include "_top_nav_page_link.html" %}
+{% endfor %}
+
+<li class="dropdown">
+    <a href="javascript: void 0;">
+        <img src="{% static "images/records.png" %}">
+        记录
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        {% for page in pages_records %}
+            {% include "_top_nav_page_link.html" %}
+        {% endfor %}
+    </ul>
+<li>
+
+<li class="dropdown">
+    <a href="javascript: void 0;">
+        <img src="{% static "images/stock.png" %}">
+        库存
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        {% for page in pages_inventory %}
+            {% include "_top_nav_page_link.html" %}
+        {% endfor %}
+
+        <li role="separator" class="divider"></li>
+
+        {% for page in pages_inventory_new %}
+            {% include "_top_nav_page_link.html" %}
+        {% endfor %}
+
+        <li role="separator" class="divider"></li>
+
+        {% for page in pages_products %}
+            {% include "_top_nav_page_link.html" %}
+        {% endfor %}
+
+        <li role="separator" class="divider"></li>
+
+        {% for page in pages_review %}
+            {% include "_top_nav_page_link.html" %}
+        {% endfor %}
+    </ul>
+<li>

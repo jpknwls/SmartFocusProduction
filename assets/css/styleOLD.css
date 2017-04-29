@@ -1,0 +1,68 @@
+/*body {
+    background-color: #FFFFFF;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: small;
+    color: #000000;
+}*/
+
+h1{text-align:center;}
+h2{text-align:center;}
+h3{text-align:center;}
+h4{text-align:center;}
+h5{text-align:center;}
+
+html{min-height: 100%;}
+
+p{
+  text-align:center;
+}
+
+label{
+  margin: 0 auto;
+  width:270px;
+  }
+  
+form{
+  margin: 0 auto;
+  width:270px;
+  }
+
+canvas{
+  border:1px solid red;
+}
+.rightalign{
+  text-align:center;
+}
+
+
+/* https://github.com/enyo/dropzone */
+
+
+.dropzone{
+  width:800px;
+  height:400px;
+  border: 1px dashed #AAF;
+  background:#faf4ff;
+  text-align: center;
+  padding:0px; /* messes up thumbnail padding too*/
+  color: #777;
+  cursor:pointer;
+  margin: 0 auto;
+}
+.dropzone.ondragover{
+  border-color: #00ff22;
+  background: #fff;
+  color:#BBB;
+}
+.dropzone.ondrop{
+  border-color: #00ff22;
+  background: #fff;
+  color:#BBB;
+}
+
+.progress {
+    background-color: #FFF;
+}
+.progress-bar {
+    background-color: #FFF;
+}

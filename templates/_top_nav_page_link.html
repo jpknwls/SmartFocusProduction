@@ -1,0 +1,16 @@
+{% comment %}
+Expects context: ``page``, optional ``active_page``, optional ``active_store``.
+{% endcomment %}
+
+<li class="{% if active_page.slug == page.slug %}active{% endif %}">
+    <a href="
+        {% if page.level == "STORE_LEVEL" %}
+            {% url "page" page.slug active_store.id %}
+        {% else %}
+            {% url "page" page.slug %}
+        {% endif %}
+        ">
+        <img src="{% static page.icon_path %}">
+        {{ page.title }}
+    </a>
+</li>
