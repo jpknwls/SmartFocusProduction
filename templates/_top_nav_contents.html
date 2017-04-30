@@ -1,15 +1,25 @@
-<li class="logo">
+{% load static %}
+
+
+<!-- Branding -->
+
+<li class="logo {% if not active_page %}active{% endif %}">
     <a href="{% url "home" %}">
         <img src="{% static "images/jiaodianlogo.png" %}">
     </a>
 </li>
 
-<li class="dropdown">
-    <a href="javascript: void 0;">
+
+<!-- Store selector -->
+
+<li class="dropdown {% if not managed_stores %}disabled{% endif %}">
+    <a href="javascript: void 0;" class="dropdown-toggle"
+        data-toggle="dropdown" role="button" aria-haspopup="true"
+        aria-expanded="false">
         <img src="{% static "images/store.png" %}">
-        {{ active_store.name|default:"商店" }}
-        <span class="caret"></span>
+        {{ active_store.name|default:"商店" }}<span class="caret"></span>
     </a>
+    {% if managed_stores %}
     <ul class="dropdown-menu">
         {% for store in managed_stores %}
         <li class="
@@ -19,30 +29,42 @@
         </li>
         {% endfor %}
     </ul>
+    {% endif %}
 </li>
+
+
+<!-- Top-level pages -->
 
 {% for page in pages_top %}
     {% include "_top_nav_page_link.html" %}
 {% endfor %}
 
+
+<!-- Records dropdown -->
+
 <li class="dropdown">
-    <a href="javascript: void 0;">
+    <a href="javascript: void 0;" class="dropdown-toggle"
+        data-toggle="dropdown" role="button" aria-haspopup="true"
+        aria-expanded="false">
         <img src="{% static "images/records.png" %}">
-        记录
-        <span class="caret"></span>
+        记录<span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
         {% for page in pages_records %}
             {% include "_top_nav_page_link.html" %}
         {% endfor %}
     </ul>
-<li>
+</li>
+
+
+<!-- Stock dropdown -->
 
 <li class="dropdown">
-    <a href="javascript: void 0;">
+    <a href="javascript: void 0;" class="dropdown-toggle"
+        data-toggle="dropdown" role="button" aria-haspopup="true"
+        aria-expanded="false">
         <img src="{% static "images/stock.png" %}">
-        库存
-        <span class="caret"></span>
+        库存<span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
         {% for page in pages_inventory %}
@@ -67,4 +89,24 @@
             {% include "_top_nav_page_link.html" %}
         {% endfor %}
     </ul>
-<li>
+</li>
+
+
+<!-- User & support dropdown -->
+
+<li class="dropdown">
+    <a href="javascript: void 0;" class="dropdown-toggle"
+        data-toggle="dropdown" role="button" aria-haspopup="true"
+        aria-expanded="false">
+        <img src="{% static "images/support.png" %}">
+        欢迎<span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <li class="dropdown-header">你好 {{ request.user.username }}</li>
+
+        <li><a href="{% url "admin:index" %}">管理</a></li>
+        <li><a href="{% url "logout" %}">退出</a></li>
+
+        <li role="separator" class="divider"></li>
+    </ul>
+</li>

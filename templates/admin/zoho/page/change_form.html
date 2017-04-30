@@ -1,0 +1,42 @@
+{% extends "admin/change_form.html" %}
+
+{% block admin_change_form_document_ready %}
+    {{ block.super }}
+
+    <script>
+        (function ($) {
+            'use strict';
+
+            var is_popup = $('body').hasClass('popup');
+
+            var levelField = $('#id_level');
+
+            var storePagesGroup = $('#store_pages-group');
+            var chainWideIframeUrls = $('.field-iframe_urls').first();
+
+            var levelSwitches = {
+                CHAIN_LEVEL: function () {
+                    storePagesGroup.hide();
+                    chainWideIframeUrls.show();
+                },
+                STORE_LEVEL: function () {
+                    chainWideIframeUrls.hide();
+                    storePagesGroup.show();
+                }
+            };
+
+            if (!is_popup) {
+                levelSwitches[levelField.val()]();
+
+                levelField.on('change', function () {
+                    var newVal = this.value;
+                    levelSwitches[newVal]();
+                });
+            } else {
+                // Don’t overload popups with per-store widgets
+                levelSwitches.CHAIN_LEVEL()
+            }
+
+        })(django.jQuery);
+    </script>
+{% endblock %}

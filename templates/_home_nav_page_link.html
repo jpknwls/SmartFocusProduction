@@ -1,14 +1,12 @@
 {% comment %}
-Link item in top navigation.
+Link block in home navigation.
 Expects context: ``page``, optional ``active_page``, optional ``active_store``.
 {% endcomment %}
 
 {% load static %}
 
 {% if page.id %}
-
-    {# Page configured #}
-
+    {# Page exists #}
     <li class="
         {% if active_page.slug == page.slug %}active{% endif %}
         "><a href="
@@ -19,16 +17,11 @@ Expects context: ``page``, optional ``active_page``, optional ``active_store``.
             {% endif %}
             ">
             <img src="{% static page.icon_path %}">
-            {{ page.title }}</a>
-    </li>
-
+            {{ page.title }}</a></li>
 {% else %}
-
-    {# Page exists in navigation but not configured in DB #}
-
     <li class="disabled"><a href="javascript: void 0;">
         <span class="glyphicon glyphicon-exclamation-sign"
             aria-hidden="true"></span>
         出错</a></li>
-
 {% endif %}
+

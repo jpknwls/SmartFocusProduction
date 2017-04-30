@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% comment %}
+Areas of the site supposed to display navigation available
+to logged-in users should inherit from this template
+{% endcomment %}
+
+{% block extra_head %}
+    {{ block.super }}
+
+    <style>
+        body {
+            justify-content: stretch;
+            align-items: stretch;
+        }
+
+        main {
+            flex: 2;
+            display: flex;
+            flex-flow: column nowrap;
+        }
+
+        /* Top navigation styling */
+        .nav img,
+        .nav .glyphicon {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+        }
+        .nav .logo img {
+            width: 65px;
+            padding: 0;
+        }
+
+        footer {
+            text-align: center;
+            color: #aaa;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <header>
+        <nav>
+            <ul class="nav nav-tabs nav-justified">
+                {% include "_top_nav_contents.html" %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; Copyright 2017 by 焦点视光</p>
+    </footer>
+
+{% endblock %}

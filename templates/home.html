@@ -1,21 +1,21 @@
-{% extends "base.html" %}
-
-{% block page_header_text %}SmartFocus{% endblock %}
-
-{% block extra_head %}
-    <style>
-        
-    </style>
-{% endblock %}
+{% extends "base_authenticated.html" %}
 
 {% block main %}
-    <section class="home-nav-container">
-        <ul c
+    <section>
+        {% if managed_stores %}
+            <ul>
+                {% for store in managed_stores %}
+                <li>
+                    <a href="{% url "store_home" store.id %}">{{ store.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign"
+                    aria-hidden="true"></span>
+                No stores to display!
+            </div>
+        {% endif %}
     </section>
-
-    <section class="home-nav-container">
-    </section>
-
-    <footer class="home-nav-container">
-    </footer>
 {% endblock %}
