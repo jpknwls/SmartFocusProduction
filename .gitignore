@@ -1,5 +1,6 @@
 *.pyc
 .ropeproject
+settings.py
 ops/.vagrant
 ops/inventories/*
 !ops/inventories/example
