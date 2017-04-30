@@ -1,6 +1,6 @@
 /* Gradients */
 /*.heaven-0 { background: #00000A; }*/
-/*.heaven-1 { background: linear-gradient(to bottom, #020214 85%,#191922 100%); }
+.heaven-1 { background: linear-gradient(to bottom, #020214 85%,#191922 100%); }
 .heaven-2 { background: linear-gradient(to bottom, #020214 60%,#20202D 100%); }
 .heaven-3 { background: linear-gradient(to bottom, #020214 10%,#303054 100%); }
 .heaven-4 { background: linear-gradient(to bottom, #20202D 0%,#505070 100%); }
@@ -22,5 +22,5 @@
 .heaven-20 { background: linear-gradient(to bottom, #051928 0%,#051928 30%,#8C3C14 80%,#230F05 100%); }
 .heaven-21 { background: linear-gradient(to bottom, #000A0F 30%,#5A230A 80%,#280A05 100%); }
 .heaven-22 { background: linear-gradient(to bottom, #0A0500 50%,#4B1E05 100%); }
-.heaven-23 { background: linear-gradient(to bottom, #00000A 80%,#140A00 100%); }*/
+.heaven-23 { background: linear-gradient(to bottom, #00000A 80%,#140A00 100%); }
 /*.heaven-24 { background: #00000A; }*/
