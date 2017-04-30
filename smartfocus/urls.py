@@ -36,7 +36,7 @@ urlpatterns = [
         name='store_page'),
 
     # Chain-wide pages
-    url(r'^(?P<page_slug>\d+)/$',
+    url(r'^(?P<page_slug>[-\w]+)/$',
         login_required(views.page),
         name='page'),
 
