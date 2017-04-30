@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import os
-
 from django.db import models
-from django.dispatch import receiver
+from django.core.exceptions import ValidationError
 
 
 class Page(models.Model):
@@ -26,6 +24,7 @@ class Page(models.Model):
 
     description = models.TextField(
         default="",
+        blank=True,
         help_text=
             "Optional. Short description to show the user where appropriate.")
 
@@ -37,47 +36,32 @@ class Page(models.Model):
             "Example: <tt>newinventory</tt>")
 
     iframe_urls = models.TextField(
+        "iframe URLs",
         default="",
+        blank=True,
         help_text=
             "One URL per line, no spaces.<br>"
-            "NOTE: If this page is store-level, leave URLs empty. "
-            "Use <b>Store Edit</b> page to add this page to stores "
-            "and provide store-specific URLs.")
+            "NOTE: If this page is store-level, leave this field empty. "
+            "Instead, assign store-specific URLs.")
 
     def __unicode__(self):
         return self.title
 
     @property
     def icon_path(self):
-        return 'images/{0}.png'.format(self.slug)
+        return 'images/pages/{0}.png'.format(self.slug)
 
+    def clean(self):
+        # TODO
+        valid_template = False
 
-# # These two auto-delete icons from filesystem when they are unneeded:
-#
-# @receiver(models.signals.post_delete, sender=Page)
-# def auto_delete_file_on_delete(sender, instance, **kwargs):
-#     """
-#     Deletes icon from filesystem
-#     when corresponding ``Page`` object is deleted.
-#     """
-#     if instance.file:
-#         if os.path.isfile(instance.file.path):
-#             os.remove(instance.file.path)
-#
-# @receiver(models.signals.pre_save, sender=Page)
-# def auto_delete_file_on_change(sender, instance, **kwargs):
-#     """Deletes icon from filesystem
-#     when corresponding ``Page`` object is changed.
-#     """
-#     if not instance.pk:
-#         return False
-#
-#     try:
-#         old_file = Page.objects.get(pk=instance.pk).file
-#     except Page.DoesNotExist:
-#         return False
-#
-#     new_file = instance.file
-#     if not old_file == new_file:
-#         if os.path.isfile(old_file.path):
-#             os.remove(old_file.path)
+        iframe_urls = [u.strip() for u in self.iframe_urls.split('\n')]
+        self.iframe_urls = '\n'.join(iframe_urls)
+
+        if self.level == 'CHAIN_LEVEL':
+            if self.iframe_urls == '' and valid_template == False:
+                raise ValidationError(
+                    "You’re creating a chain-level page. "
+                    "Make sure you specify either at least one iframe URL "
+                    "(if more than one URL then each on its own line), "
+                    "or exactly one template filename. ")

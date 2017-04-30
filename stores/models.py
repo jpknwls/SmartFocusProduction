@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.db.models import Q
+from django.core.exceptions import ValidationError
 
 
 class Region(models.Model):
@@ -48,6 +49,7 @@ class StorePage(models.Model):
         help_text="One store-specific URL per line, no spaces.")
 
     class Meta:
+        verbose_name_plural = "store page contents"
         unique_together = ('page', 'store')
 
     def __unicode__(self):
@@ -55,15 +57,27 @@ class StorePage(models.Model):
             page=unicode(self.page),
             store=unicode(self.store))
 
+    def clean(self):
+        if self.page.level == 'CHAIN_LEVEL':
+            raise ValidationError("Can’t assign chain-level page to a store!")
+
 
 def get_managed_stores(user):
     """
     Returns a QuerySet of ``Store`` instances
     according to user’s management role.
     """
-    return Store.objects.filter(Q(region__manager=user) | Q(manager=user))
+    if user.is_superuser:
+        return Store.objects.all()
+    else:
+        return Store.objects.filter(Q(region__manager=user) | Q(manager=user))
 
 
 def is_manager(user, store):
     """Returns ``True`` if ``store`` is managed by ``user``."""
-    return store.manager == user or store.region.manager == user
+
+    return any([
+        store.manager == user,
+        store.region.manager == user,
+        user.is_superuser,
+    ])
