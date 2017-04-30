@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
@@ -37,4 +39,5 @@ urlpatterns = [
     url(r'^(?P<page_slug>\d+)/$',
         login_required(views.page),
         name='page'),
-]
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
