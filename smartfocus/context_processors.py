@@ -24,39 +24,43 @@ def page_navigation(request):
     """
     Returns context with page navigation structures, split by sections.
     """
-    chain_pages = Page.objects.filter(level='CHAIN_LEVEL')
-    store_pages = Page.objects.filter(level='STORE_LEVEL')
 
+    # Accumulates all page objects into a dictionary
+    # so we can easily pull them by slug when building navigation below
     pages = {}
-    for p in list(chain_pages) + list(store_pages):
-        pages[p.slug] = p
+    for page in Page.objects.all():
+        pages[page.slug] = page
 
+    # Little helper to get a page or fall back its slug if the page is missing
+    p = lambda slug: pages.get(slug) or slug
+
+    # Return template context with our menu structure
     return dict(
         pages_top=[
-            pages['patient'],
-            pages['exam'],
-            pages['sale'],
-            pages['salescomparison'],
+            p('patient'),
+            p('exam'),
+            p('sale'),
+            p('salescomparison'),
         ],
         pages_records=[
-            pages['patientrecords'],
-            pages['examrecords'],
-            pages['salesrecords'],
+            p('patientrecords'),
+            p('examrecords'),
+            p('salesrecords'),
         ],
         pages_inventory=[
-            pages['frameinventory'],
-            pages['lensinventory'],
+            p('frameinventory'),
+            p('lensinventory'),
         ],
         pages_inventory_new=[
-            pages['newinventory'],
+            p('newinventory'),
         ],
         pages_products=[
-            pages['products'],
-            pages['newproduct'],
+            p('products'),
+            p('newproduct'),
         ],
         pages_review=[
-            pages['inventoryreviewform'],
-            pages['discrepancyrecords'],
+            p('inventoryreviewform'),
+            p('discrepancyrecords'),
         ],
     )
 
