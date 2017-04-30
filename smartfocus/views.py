@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
-from django import http
+from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
 
 from stores.models import Store, StorePage, get_managed_stores
 from stores.views import require_store_manager
@@ -15,8 +15,12 @@ def home(request, *args, **kwargs):
     Main page.
     Redirects to store home for the first store among managed by current user.
     """
-    store = get_managed_stores(request.user)[0]
-    return http.HttpResponseRedirect(reverse('store_home', store.pk))
+    try:
+        store = get_managed_stores(request.user)[0]
+    except IndexError:
+        return render(request, 'home.html')
+    else:
+        return redirect('store_home', store.pk)
 
 
 @require_store_manager
@@ -25,7 +29,10 @@ def store_home(request, store_id, *args, **kwargs):
     Main page of the store identified by ``store_id``.
     Includes links to store-specific pages as well as chain-wide pages.
     """
-    return render(request, 'home.html')
+    return render(request, 'store_home.html')
+
+
+def set_store
 
 
 @require_store_manager
@@ -41,7 +48,7 @@ def store_page(request, store_id, page_slug, *args, **kwargs):
         store=store,
         page__slug=page_slug)
 
-    urls = store_page.iframe_urls.split('/n')
+    urls = store_page.iframe_urls.split('\n')
 
     title = "{page_title} — {store_name}".format(
         page_title=store_page.page.title,
@@ -57,7 +64,7 @@ def page(request, page_slug, *args, **kwargs):
     """
     page = get_object_or_404(Page, slug=page_slug)
 
-    urls = page.iframe_urls.split('/n')
+    urls = page.iframe_urls.split('\n')
 
     return render_page(request, title=page.title, iframe_urls=urls)
 
@@ -69,7 +76,7 @@ def render_page(request, title, iframe_urls):
     * ``title`` for window title
     * ``iframe_urls`` for the list of Zoho views to include
     """
-    return render(request, 'page.html', dict(
+    return render(request, 'iframe_page.html', dict(
         title=title,
         iframe_urls=iframe_urls,
     ))
