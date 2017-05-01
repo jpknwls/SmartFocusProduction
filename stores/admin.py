@@ -15,7 +15,7 @@ class RegionAdmin(admin.ModelAdmin):
 
 
 class StoreAdmin(admin.ModelAdmin):
-    list_display = ('name', 'has_all_pages_configured', )
+    list_display = ('name', 'manager', 'has_all_pages_configured', )
 
     list_filter = ('region', )
 

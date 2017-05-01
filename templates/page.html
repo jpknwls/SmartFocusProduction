@@ -1,0 +1,61 @@
+{% extends "base_authenticated.html" %}
+
+{% comment %}
+Generic page foundation, meant to be overridden.
+Expected context, in addition to extended templates:
+* {{ title }}: String for window title
+* {{ page }}: Page object
+* {{ active_store }}: Currently selected store
+{% endcomment %}
+
+{% block window_title_text %}{{ title }} — {{ block.super }}{% endblock %}
+
+{% block extra_head %}
+    {{ block.super }}
+
+    <style>
+        .page {
+            flex: 1;
+            display: flex;
+            flex-flow: column nowrap;
+            padding: 1em;
+        }
+        .page > main {
+            flex: 1;
+            display: flex;
+            justify-content: stretch;
+            align-items: stretch;
+        }
+        .page > .store-nav {
+            margin-bottom: .5em;
+        }
+
+    </style>
+{% endblock %}
+
+{% block main %}
+    <article class="page {% block page_class %}{% endblock %}">
+
+        <nav class="store-nav">
+            {# For store-level pages, show store selector #}
+            {% if page.level == "STORE_LEVEL" %}
+
+                <ul class="nav nav-pills">
+                    {% for store in managed_stores %}
+                    <li class="{% if store == active_store %}active{% endif %}">
+                        <a href="{% url "store_page" store.pk page.slug %}"
+                            >{{ store.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            {% endif %}
+        </nav>
+
+        <main>
+            {% block page_contents %}
+            {% endblock %}
+        </main>
+
+    </article>
+{% endblock %}
