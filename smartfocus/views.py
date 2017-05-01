@@ -32,9 +32,6 @@ def store_home(request, store_id, *args, **kwargs):
     return render(request, 'store_home.html')
 
 
-def set_store
-
-
 @require_store_manager
 def store_page(request, store_id, page_slug, *args, **kwargs):
     """
