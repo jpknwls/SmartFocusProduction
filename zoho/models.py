@@ -85,11 +85,13 @@ class Page(models.Model):
         which means it should have no chain-wide contents specified.
         """
         if self.iframe_urls != '':
-            raise exceptions.ValidationError(
-                "You’re creating a store-level page. "
-                "Please specify page contents in sections "
-                "corresponding to individual stores "
-                "and leave contents in chain-wide page empty.")
+            raise exceptions.ValidationError({
+                'iframe_urls':
+                    "You’ve chosen to create a store-level page. "
+                    "Please specify page contents in sections "
+                    "corresponding to individual stores "
+                    "and leave chain-level contents empty."
+            })
 
     def clean_chain_level(self):
         """
@@ -114,7 +116,7 @@ class Page(models.Model):
 
         if self.iframe_urls == '':
             content_field_errors.append(
-                "You’re creating a chain-level page. "
+                "You’ve chosen to create a chain-level page. "
                 "Make sure you specify either at least one iframe URL "
                 "(if more than one URL then each on its own line), "
                 "or exactly one template filename. ")
