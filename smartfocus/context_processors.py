@@ -1,102 +1,93 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from stores.models import Store
-from stores.models import get_managed_stores
 from zoho.models import Page
 
 
-def managed_stores(request):
+DROPDOWNS = {
+    'records': [
+        'patientrecords',
+        'examrecords',
+        'salesrecords',
+    ],
+    'stock': [
+        'frameinventory',
+        'lensinventory',
+        'newinventory',
+        'products',
+        'newproduct',
+        'inventoryreviewform',
+        'discrepancyrecords',
+    ],
+    'welcome': [
+        'documents',
+        'about',
+    ],
+}
+"""
+Associates a dropdown identifier with a set of page identifiers.
+Used in templates to determine which dropdown toggle to highlight.
+This needs to be maintained in accordance with navigation used in template.
+"""
+
+
+def active_dropdown(request):
     """
-    Returns context with stores managed by currently logged-in user.
+    Helper letting templates know which dropdown toggle
+    does currently active page belong to, if any.
+
+    Added context variables: ``active_dropdown``, string.
     """
     if not request.user.is_authenticated():
-        return dict()
+        return {}
 
-    return dict(
-        managed_stores=
-            get_managed_stores(request.user).
-            prefetch_related('store_pages'),
-    )
-
-
-def page_navigation(request):
-    """
-    Returns context with page navigation structures, split by sections.
-    """
-
-    # Accumulates all page objects into a dictionary
-    # so we can easily pull them by slug when building navigation below
-    pages = {}
-    for page in Page.objects.all():
-        pages[page.slug] = page
-
-    # Little helper to get a page or fall back its slug if the page is missing
-    p = lambda slug: pages.get(slug) or slug
-
-    # Return template context with our menu structure
-    return dict(
-        pages_top=[
-            p('patient'),
-            p('exam'),
-            p('sale'),
-            p('salescomparison'),
-        ],
-        pages_records=[
-            p('patientrecords'),
-            p('examrecords'),
-            p('salesrecords'),
-        ],
-        pages_inventory=[
-            p('frameinventory'),
-            p('lensinventory'),
-        ],
-        pages_inventory_new=[
-            p('newinventory'),
-        ],
-        pages_products=[
-            p('products'),
-            p('newproduct'),
-        ],
-        pages_review=[
-            p('inventoryreviewform'),
-            p('discrepancyrecords'),
-        ],
-    )
-
-
-def active_store(request):
-    """
-    Returns context with active store, if any, based on URL parameters.
-    """
-    store_id = request.resolver_match.kwargs.get('store_id')
-
-    if not store_id:
-        return dict()
+    active_page_slug = request.resolver_match.kwargs.get('page_slug')
 
     try:
-        active_store = Store.objects.get(pk=store_id)
-    except Store.DoesNotExist:
-        return dict()
+        return dict(
+            active_dropdown=[d_name for d_name, d_pages in DROPDOWNS.items()
+                             if active_page_slug in d_pages][0],
+        )
+    except IndexError:
+        return {}
 
-    return dict(
-        active_store=active_store,
-    )
+
+def pages(request):
+    """
+    Added context variables: ``pages``, contains a structure like
+    {page_identifier: page, page_identifier_2: page2, ...}.
+    """
+    if not request.user.is_authenticated():
+        return {}
+
+    pages = {}
+    for p in Page.objects.all():
+        pages[p.slug] = dict(
+            pk=p.pk,
+            slug=p.slug,
+            icon_path=p.icon_path,
+            title=p.title,
+            description=p.description,
+            level=p.level,
+        )
+
+    return dict(pages=pages)
 
 
 def active_page(request):
     """
     Returns context with active page, if any, based on URL parameters.
+    Added context variables: ``active_page`` pointing to Page object.
     """
-    page_slug = request.resolver_match.kwargs.get('page_slug')
+    active_page_slug = request.resolver_match.kwargs.get('page_slug')
 
-    if not page_slug:
-        return dict()
+    if not active_page_slug:
+        return {}
 
     try:
-        active_page = Page.objects.get(slug=page_slug)
+        active_page = Page.objects.get(slug=active_page_slug)
     except Page.DoesNotExist:
-        return dict()
+        return {}
 
     return dict(
         active_page=active_page,

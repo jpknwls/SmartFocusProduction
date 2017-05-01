@@ -12,29 +12,44 @@ to logged-in users should inherit from this template
         body {
             justify-content: stretch;
             align-items: stretch;
+            padding: .5em;
         }
 
-        main {
+        body > main {
             flex: 2;
             display: flex;
             flex-flow: column nowrap;
+
+            justify-content: stretch;
+            align-items: stretch;
+
+            /* Make it so that the <main> scrolls instead of the <body> */
+            overflow-y: auto;
         }
 
-        /* Top navigation styling */
-        .nav img,
-        .nav .glyphicon {
+        /* Site-wide navigation */
+        body > header .nav .logo img {
+            width: 65px;
+            padding: 0;
+        }
+        body > header .nav img,
+        body > header .nav .glyphicon {
             width: 18px;
             height: 18px;
             vertical-align: middle;
         }
-        .nav .logo img {
-            width: 65px;
-            padding: 0;
-        }
 
-        footer {
+
+        /* Site-wide footer */
+        body > footer {
             text-align: center;
             color: #aaa;
+            padding-top: 1em;
+        }
+        body > footer p {
+            margin: 0;
+            padding: 0;
+            font-size: 80%;
         }
     </style>
 {% endblock %}

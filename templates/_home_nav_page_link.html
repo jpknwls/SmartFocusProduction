@@ -1,15 +1,18 @@
 {% comment %}
-Link block in home navigation.
-Expects context: ``page``, optional ``active_page``, optional ``active_store``.
+Link block in home page navigation.
+Expected context:
+{{ page }}
+{{ active_store }}
 {% endcomment %}
 
 {% load static %}
 
-{% if page.id %}
-    {# Page exists #}
-    <li class="
-        {% if active_page.slug == page.slug %}active{% endif %}
-        "><a href="
+{% if page.pk %}
+
+    {# Page configured #}
+
+    <li>
+        <a href="
             {% if page.level == "STORE_LEVEL" %}
                 {% url "store_page" active_store.id page.slug %}
             {% else %}
@@ -17,11 +20,24 @@ Expects context: ``page``, optional ``active_page``, optional ``active_store``.
             {% endif %}
             ">
             <img src="{% static page.icon_path %}">
-            {{ page.title }}</a></li>
-{% else %}
-    <li class="disabled"><a href="javascript: void 0;">
-        <span class="glyphicon glyphicon-exclamation-sign"
-            aria-hidden="true"></span>
-        出错</a></li>
-{% endif %}
+            <h2 class="title">{{ num }} {{ page.title }}</h2>
+            <p class="desc">{{ page.description }}</p>
+        </a>
+    </li>
 
+{% else %}
+
+    {# Page exists in navigation but not configured in DB #}
+    {# Show an error #}
+
+    <li class="disabled" title="Page not configured">
+        <a href="javascript: void 0;">
+            <span class="glyphicon glyphicon-exclamation-sign"
+                aria-hidden="true"></span>
+            <br>
+            <h2 class="title">{{ num }} 出错</h2>
+            <p class="desc">Page not configured</p>
+        </a>
+    </li>
+
+{% endif %}

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'stores',
     'zoho',
 ]
@@ -69,10 +70,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                'smartfocus.context_processors.managed_stores',
-                'smartfocus.context_processors.page_navigation',
-                'smartfocus.context_processors.active_store',
+                'smartfocus.context_processors.active_dropdown',
                 'smartfocus.context_processors.active_page',
+                'smartfocus.context_processors.pages',
             ],
         },
     },

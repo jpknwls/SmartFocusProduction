@@ -1,45 +1,86 @@
-{% extends "base_authenticated.html" %}
+{% extends "page.html" %}
 
 {% comment %}
-Renders page with one or more Zoho iframes.
-Required context:
-* {{ title }}: String for window title
-* {{ iframe_urls }}: List of iframe URLs
+Typical page showing a set of Zoho iframes.
+Expected context, in addition to extended templates:
+* {{ iframe_urls }}: A list of valid URLs to show in iframes
 {% endcomment %}
-
-{% block window_title_text %}{{ title }} — {{ block.super }}{% endblock %}
 
 {% block extra_head %}
     {{ block.super }}
 
     <style>
-        main {
-            background-color: red;
-            justify-content: stretch;
-            align-items: stretch;
+        .iframe-page--not-configured > main {
+            justify-content: center;
+            align-items: center;
         }
-        main > .iframe-container {
-            display: flex;
-            justify-content: stretch;
-            align-items: stretch;
+
+        .iframe-container {
             flex: 1;
+            position: relative;
         }
         .iframe-container > iframe {
             /* Make this iframe occupy all available space */
             width: 100%; height: 100%;
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: 1;
+        }
+        .iframe-container > .loading-message,
+        .iframe-container > .not-configured-message {
+            width: 100%; height: 100%;
+
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 200%;
+            color: #aaa;
+            z-index: 0;
         }
     </style>
 {% endblock %}
 
-{% block main %}
+{% block page_class %}
+    {% if not iframe_urls %}
+        iframe-page--not-configured
+    {% endif %}
+{% endblock %}
+
+{% block page_contents %}
     {% for iframe_url in iframe_urls %}
 
         <div class="iframe-container">
+
+            <div class="loading-message">
+                <p>
+                    Loading {{ page }}{% if page.level == "STORE_LEVEL" %} at
+                    {{ active_store }}{% endif %}…
+                </p>
+            </div>
+
             <iframe
                 frameborder="0"
                 allowTransparency="true"
                 scrolling="auto"
                 src="{{ iframe_url }}"></iframe>
+        </div>
+
+    {% empty %}
+
+        <div class="iframe-container">
+
+            <div class="not-configured-message">
+                <p>
+                    {{ page }}{% if page.level == "STORE_LEVEL" %}
+                    at {{ active_store }}{% endif %} has not been configured
+                </p>
+            </div>
+
         </div>
 
     {% endfor %}

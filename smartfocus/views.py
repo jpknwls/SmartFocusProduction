@@ -2,78 +2,73 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 
-from stores.models import Store, StorePage, get_managed_stores
+from stores.models import Store, StorePage
 from stores.views import require_store_manager
 from zoho.models import Page
 
 
-def home(request, *args, **kwargs):
+@require_store_manager
+def home(request, active_store, managed_stores, *args, **kwargs):
     """
-    Main page.
-    Redirects to store home for the first store among managed by current user.
+    Main page with nav showing links to different pages.
     """
-    try:
-        store = get_managed_stores(request.user)[0]
-    except IndexError:
-        return render(request, 'home.html')
-    else:
-        return redirect('store_home', store.pk)
+    return render(request, 'home.html', dict(
+        active_store=active_store,
+        managed_stores=managed_stores,
+    ))
 
 
 @require_store_manager
-def store_home(request, store_id, *args, **kwargs):
-    """
-    Main page of the store identified by ``store_id``.
-    Includes links to store-specific pages as well as chain-wide pages.
-    """
-    return render(request, 'store_home.html')
-
-
-@require_store_manager
-def store_page(request, store_id, page_slug, *args, **kwargs):
+def store_page(request, store_id, page_slug,
+               active_store, managed_stores,
+               *args, **kwargs):
     """
     Renders page identified by ``page_slug``
     and associated with the store identified by ``store_id``.
     """
     store = get_object_or_404(Store, pk=store_id)
+    page = get_object_or_404(Page, slug=page_slug)
 
-    store_page = get_object_or_404(
-        StorePage,
-        store=store,
-        page__slug=page_slug)
-
-    urls = store_page.iframe_urls.split('\n')
+    try:
+        store_page = StorePage.objects.get(store=store, page=page)
+    except StorePage.DoesNotExist:
+        urls = []
+    else:
+        urls = store_page.iframe_urls.split('\n')
 
     title = "{page_title} — {store_name}".format(
-        page_title=store_page.page.title,
+        page_title=page.title,
         store_name=store.name)
 
-    return render_page(request, title=title, iframe_urls=urls)
+    return render(request, 'iframe_page.html', dict(
+        page=page,
+        title=title,
+        iframe_urls=urls,
+        active_store=active_store,
+        managed_stores=managed_stores,
+    ))
 
 
-def page(request, page_slug, *args, **kwargs):
+@require_store_manager
+def page(request, page_slug, active_store, managed_stores, *args, **kwargs):
     """
     Renders page identified by ``page_slug``.
     That page must not require store (``iframe_urls`` must be populated).
     """
     page = get_object_or_404(Page, slug=page_slug)
 
+    if page.level == 'STORE_LEVEL':
+        return redirect('store_page', active_store.id, page_slug)
+
     urls = page.iframe_urls.split('\n')
 
-    return render_page(request, title=page.title, iframe_urls=urls)
-
-
-def render_page(request, title, iframe_urls):
-    """
-    Renders page template, passing it the following context:
-
-    * ``title`` for window title
-    * ``iframe_urls`` for the list of Zoho views to include
-    """
     return render(request, 'iframe_page.html', dict(
-        title=title,
-        iframe_urls=iframe_urls,
+        page=page,
+        title=page.title,
+        iframe_urls=urls,
+        active_store=active_store,
+        managed_stores=managed_stores,
     ))

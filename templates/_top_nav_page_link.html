@@ -1,11 +1,14 @@
 {% comment %}
-Link item in top navigation.
-Expects context: ``page``, optional ``active_page``, optional ``active_store``.
+Top navigation link item.
+Expected context:
+{{ page }}
+{{ active_store }}
+{{ active_page }}
 {% endcomment %}
 
 {% load static %}
 
-{% if page.id %}
+{% if page.pk %}
 
     {# Page configured #}
 
@@ -25,10 +28,14 @@ Expects context: ``page``, optional ``active_page``, optional ``active_store``.
 {% else %}
 
     {# Page exists in navigation but not configured in DB #}
+    {# Show an error #}
 
-    <li class="disabled"><a href="javascript: void 0;">
-        <span class="glyphicon glyphicon-exclamation-sign"
-            aria-hidden="true"></span>
-        出错</a></li>
+    <li class="disabled" title="Page not configured">
+        <a href="javascript: void 0;">
+            <span class="glyphicon glyphicon-exclamation-sign"
+                aria-hidden="true"></span>
+            出错
+        </a>
+    </li>
 
 {% endif %}
