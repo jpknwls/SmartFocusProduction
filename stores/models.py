@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.db.models import Q
 from django.core.exceptions import ValidationError
+from django.core import validators
 
 
 class Region(models.Model):
@@ -46,7 +47,10 @@ class StorePage(models.Model):
         related_name='store_pages')
 
     iframe_urls = models.TextField(
-        help_text="One store-specific URL per line, no spaces.")
+        "store-level iframe URLs",
+        help_text=
+            "At least one store-specific iframe URL, "
+            "if multiple then each on its own line.")
 
     class Meta:
         verbose_name_plural = "store page contents"
@@ -59,7 +63,24 @@ class StorePage(models.Model):
 
     def clean(self):
         if self.page.level == 'CHAIN_LEVEL':
-            raise ValidationError("Can’t assign chain-level page to a store!")
+            raise ValidationError(
+                "Can’t set store-specific contents for a chain-level page!")
+
+        # Validate provided URLs
+        iframe_urls = [u.strip() for u in self.iframe_urls.split('\n')]
+
+        errors = []
+
+        for url in iframe_urls:
+            try:
+                validators.URLValidator()(url)
+            except ValidationError, e:
+                errors.append("{0}: {1}".format(url, ', '.join(e.messages)))
+
+        self.iframe_urls = '\n'.join(iframe_urls)
+
+        if len(errors) > 0:
+            raise ValidationError({'iframe_urls': errors})
 
 
 def get_managed_stores(user):
