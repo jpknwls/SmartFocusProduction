@@ -3,5 +3,5 @@
 settings.py
 ops/.vagrant
 ops/inventories/*
-!ops/inventories/example
+!ops/inventories/_example*
 playbook.retry
