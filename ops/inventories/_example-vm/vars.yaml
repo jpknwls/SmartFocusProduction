@@ -1,0 +1,16 @@
+---
+# Domain name under which the app will be served
+domain_name: 127.0.0.1
+
+# Your email, to be supplied when creating SSL certificate
+ssl_email:
+
+# Make this a really random and long string.
+# One limitation: it must not contain character ' (single quote)
+django_secret:
+
+user: vagrant
+group: vagrant
+
+# High security risk. Only set in development
+debug: no

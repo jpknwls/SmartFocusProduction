@@ -14,7 +14,12 @@ server {
 
 server {
     listen 80;
+    listen 443 ssl;
+
     server_name {{ domain_name }};
+
+    ssl_certificate {{ letsencrypt_live_root }}/{{ domain_name }}/fullchain.pem;
+    ssl_certificate_key {{ letsencrypt_live_root }}/{{ domain_name }}/privkey.pem;
 
     client_max_body_size 4M;
 
@@ -30,6 +35,7 @@ server {
 
         add_header P3P 'CP="ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"';
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Protocol $scheme;
         proxy_set_header Host $http_host;
         proxy_redirect off;
     }

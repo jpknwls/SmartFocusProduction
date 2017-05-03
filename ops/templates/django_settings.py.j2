@@ -21,16 +21,22 @@ ALLOWED_HOSTS = [
 SECRET_KEY = '{{ django_secret }}'
 
 
-{% if django_debug %}
+
+{% if debug %}
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 
 INSTALLED_APPS += [
     'django_extensions',
     'sslserver',
 ]
+{% endif %}
+
+{% if ssl %}
+SECURE_SSL_REDIRECT = True
+# This requires a corresponding setting in Nginx config
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
 
 {% endif %}
 
@@ -41,5 +47,3 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, '..', 'db.sqlite3'),
     }
 }
-
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')

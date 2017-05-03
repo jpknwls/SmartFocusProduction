@@ -3,12 +3,36 @@
 
 
   vars:
-    target_type: dev
-    user: vagrant
-    group: vagrant
-    project_home: /home/vagrant/app
-    django_debug: false
+    _local_code_root: "../.."
+    project_home: /home/{{ user }}/app
+    nginx_default_root: /usr/share/nginx/html
+    certbot_webroot: "{{ nginx_default_root }}"
+    letsencrypt_live_root: /etc/letsencrypt/live
+    ssl: true
 
+    push_mode: none
+    # To be overridden in --extra-vars when needed.
+    #
+    # Available push modes:
+    # none (default): app code is not pushed, assumed to be mirrored
+    # rsync: users Ansible’s wrapper around rsync to push app code
+    #
+    # When deploying onto a remote system,
+    # pass push mode to Ansible with --extra-vars, e.g.:
+    # $ ansible-playbook ... --extra-vars push_mode=rsync
+
+    load_initial_data: no
+    # To be overridden in --extra-vars when needed.
+    #
+    # This flag instructs Django to load pre-made data fixtures into the DB.
+    # Typically used on first deployments only.
+    #
+    # NOTE: This overwrites any existing objects.
+    # E.g., if you load data into app and then something in DB changes
+    # and you load data again, you will lose those changes.
+
+    initial_data_fixture_path:
+      "{{ project_home }}/src/smartfocus/fixtures/initial_data.json"
 
   vars_files:
     - vars.yaml
@@ -16,6 +40,16 @@
 
 
   tasks:
+
+    - name: add certbot ppa
+      become: true
+      apt_repository: repo='ppa:certbot/certbot'
+      tags: system
+
+    - name: add deadsnakes ppa
+      become: true
+      apt_repository: repo='ppa:fkrull/deadsnakes-python2.7'
+      tags: system
 
     - name: update apt cache
       become: true
@@ -27,20 +61,41 @@
       apt: name={{ item }} state=present
       with_items:
         - vim
+        - certbot
         - nginx
         - python-dev
         - python-pip
-        - libpq-dev
         - gunicorn
       tags: system
 
+    - name: upgrade apt packages
+      become: true
+      apt: upgrade=safe
+      tags: system, ssl
 
 
+
+
+      # For certbot/letsencrypt to work
+    - name: enable default nginx vhost
+      become: true
+      file:
+        src=/etc/nginx/sites-available/default
+        dest=/etc/nginx/sites-enabled/default
+        state=link
+      tags: ssl
+
+    - name: set up ssl cert
+      become: true
+      command: certbot certonly --non-interactive --agree-tos --email {{ ssl_email }} --webroot -w {{ certbot_webroot }} -d {{ domain_name }}
+      # If this doesn’t work, it’s likely because of using an IP in dev.
+      ignore_errors: yes
+      tags: ssl
 
     - name: disable default nginx vhost
       become: true
       file: path=/etc/nginx/sites-enabled/default state=absent
-      tags: nginx
+      tags: nginx, ssl
 
     - name: create our nginx vhost
       become: true
@@ -66,16 +121,30 @@
 
 
 
+    - name: upload app code
+      synchronize:
+        src: "{{ _local_code_root }}"
+        dest: "{{ project_home }}"
+      when: push_mode == "rsync"
+      tags: webapp, app-code, static
+      notify:
+        - restart gunicorn
+
+
+
+
     - name: install pip requirements
       become: true
       pip: requirements={{ project_home }}/src/ops/requirements.txt
       tags: webapp, pip-deps
+      notify:
+        - restart gunicorn
 
-    - name: provide django settings
+    - name: upload django settings
       template:
         src=templates/django_settings.py.j2
         dest={{ project_home }}/src/{{ appname }}/settings.py
-      tags: webapp, django-settings
+      tags: webapp, django-settings, app-code
 
 
 
@@ -99,11 +168,6 @@
         - restart gunicorn
       tags: gunicorn
 
-    - name: reload gunicorn
-      service: name=gunicorn state=restarted
-      become: true
-      tags: on-code-change
-
 
 
 
@@ -113,7 +177,15 @@
         command={{ item }}
       with_items:
         - migrate
-      tags: webapp, django-commands
+        - collectstatic
+      tags: webapp, static, django-commands
+
+    - name: load initial data
+      django_manage:
+        app_path={{ project_home }}/src
+        command="loaddata {{ initial_data_fixture_path }}"
+      when: load_initial_data|bool
+      tags: webapp, load-initial-data, django-commands
 
 
 
