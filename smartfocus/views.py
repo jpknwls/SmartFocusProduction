@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import os
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -8,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from stores.models import Store, StorePage
 from stores.views import require_store_manager
 from zoho.models import Page
+from zoho.models import CUSTOM_PAGE_TEMPLATE_ROOT
 
 
 @require_store_manager
@@ -56,7 +59,10 @@ def store_page(request, store_id, page_slug,
 def page(request, page_slug, active_store, managed_stores, *args, **kwargs):
     """
     Renders page identified by ``page_slug``.
-    That page must not require store (``iframe_urls`` must be populated).
+
+    That page must not require store: ``iframe_urls`` must be populated
+    with a list of URLs, or it should contain filename of an existing template.
+    If neither, it would be rendered empty.
     """
     page = get_object_or_404(Page, slug=page_slug)
 
@@ -65,7 +71,16 @@ def page(request, page_slug, active_store, managed_stores, *args, **kwargs):
 
     urls = page.iframe_urls.split('\n')
 
-    return render(request, 'iframe_page.html', dict(
+    custom_template_path = os.path.join(
+        CUSTOM_PAGE_TEMPLATE_ROOT,
+        page.iframe_urls)
+
+    templates_to_try = [
+        custom_template_path,
+        'iframe_page.html',
+    ]
+
+    return render(request, templates_to_try, dict(
         page=page,
         title=page.title,
         iframe_urls=urls,
