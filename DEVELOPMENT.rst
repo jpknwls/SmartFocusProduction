@@ -26,6 +26,15 @@ don’t pass push_mode=rsync to Ansible.
 Optionally during active development:
 use Django development server, set debug to yes if needed.
 
+.. note::
+   
+   Refer to `Ansible docs <http://docs.ansible.com/ansible/index.html>`__
+   for details on using Ansible for automated deployments
+   and configuration management over SSH.
+
+   Refer to `Vagrant docs <https://www.vagrantup.com/intro/index.html>`__
+   for details on virtual machine operation using Vagrant.
+
 Initial setup
 ~~~~~~~~~~~~~
 
@@ -89,4 +98,4 @@ a development server.
 If you have changed Django settings template ``django_settings.py.j2``,
 you need to pass ``--tags django-settings`` to Ansible.
 
-Multiple tags can be combined, see Ansible docs for details.
+Multiple tags can be supplied.

@@ -3,7 +3,16 @@ Operating this app
 ==================
 
 Some commonly used tasks are automated using an Ansible playbook.
+
 Familiarity with command line shell is assumed.
+
+.. note::
+   
+   Be sure to refer to `Ansible docs <http://docs.ansible.com/ansible/index.html>`__
+   for details on using Ansible for automated deployments
+   and configuration management over SSH.
+
+   See also Development documentation on this project.
 
 Pre-requisites
 ~~~~~~~~~~~~~~
@@ -98,14 +107,12 @@ Process
 
 * Run::
 
-      ansible-playbook -i inventories/<env>/hosts.ini playbook.yaml --extra-vars push_mode=rsync load_initial_data=yes
+      ansible-playbook -i inventories/<env>/hosts.ini playbook.yaml -e "push_mode=rsync load_initial_data=yes"
 
   The command will deploy current code in your working directory
   onto the server specified in <env>/hosts.ini.
 
 * The app should be accessible under https://<your_domain_name>/.
-
-See Development documentation for more detail.
 
 Saving and loading data
 ```````````````````````
@@ -114,9 +121,9 @@ in extra_vars to Ansible.
 
 If you want to update data fixtures with the current state of the DB,
 that process is manual. You’d need to SSH into your system
-and run the following from inside the src/ directory::
+and run dumpdata from inside the src/ directory, for example::
 
-    ./manage.py dumpdata stores zoho -o smartfocus/fixtures/initial_data.json
+    ./manage.py dumpdata auth stores zoho -o smartfocus/fixtures/initial_data.json
 
 Then you might want to download the smartfocus/fixtures/initial_data.json file
 using something like scp and check it into your repository.
