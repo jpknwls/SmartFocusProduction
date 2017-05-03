@@ -129,5 +129,4 @@ using something like scp and check it into your repository.
 
 Using Django shell
 ``````````````````
-On your target system, change into src/ directory
-and run ``./manage.py shell``.
+SSH into your target system and run ``./manage.py shell`` from under src/.
