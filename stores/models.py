@@ -5,11 +5,18 @@ from django.db import models
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.core import validators
+from django.conf import settings
+from django.contrib.auth import get_user_model
+
+
+def get_sentinel_user():
+    return get_user_model().objects.get_or_create(username='deleted_user')[0]
 
 
 class Region(models.Model):
     manager = models.ForeignKey(
-        'auth.User',
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET(get_sentinel_user),
         help_text=
             "Selected user will manage all stores belonging "
             "to this region.")
@@ -24,7 +31,8 @@ class Store(models.Model):
     region = models.ForeignKey('stores.Region')
 
     manager = models.ForeignKey(
-        'auth.User',
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET(get_sentinel_user),
         help_text=
             "Selected user will manage this store. "
             "Note that manager assigned to store’s region will "
