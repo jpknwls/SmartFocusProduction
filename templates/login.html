@@ -1,13 +1,59 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block extra_head %}
+    {{ block.super }}
+
+    <link rel="stylesheet" href="{% static "css/loginstyle.css" %}">
+{% endblock %}
+
 {% block window_title_text %}Login — {{ block.super }}{% endblock %}
 
 {% block body %}
 
-    <form action="{% url "login" %}" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Log in</button>
+    <form action="{% url "login" %}" method="POST" class="form-horizontal">
+        <div class="login">
+            <div class="login-screen">
+                {% csrf_token %}
+
+                <div class="app-title">
+                    <h1>焦点视光</h1>
+                    <h4>放眼世界  展望未来</h4>
+                </div>
+
+                <div class="login-form">
+                    <div class="control-group">
+                        <input
+                            type="text"
+                            class="login-field"
+                            value=""
+                            placeholder="username"
+                            name="username" id="id_username">
+                        <label
+                            for="id_username"
+                            class="login-field-icon fui-user"
+                            ></label>
+                    </div>
+
+                    <div class="control-group">
+                        <input
+                            type="password"
+                            class="login-field"
+                            value=""
+                            placeholder="password"
+                            name="password"
+                            id="id_password">
+                        <label
+                            for="id_password"
+                            class="login-field-icon fui-lock"
+                            ></label>
+                    </div>
+
+                    <input type="submit" value="Log in" class="btn btn-primary btn-large btn-block">
+                </div>
+            </div>
+        </div>
     </form>
 
 {% endblock %}
