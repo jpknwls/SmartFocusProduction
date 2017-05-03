@@ -129,12 +129,18 @@ class Page(models.Model):
             template.loader.get_template(tentative_template_path)
         except template.loader.TemplateDoesNotExist:
             valid_template = False
+        except template.TemplateSyntaxError, exc:
+            valid_template = True
+
+            content_field_errors.append(
+                "Template syntax error. {err} "
+                "(Please refer to Django template syntax documentation.) "
+                .format(path=self.iframe_urls, err=unicode(exc)))
         else:
             valid_template = True
 
         # If not a template, treat contents as a list of iframe URLs
         if not valid_template:
-
             iframe_urls = [u.strip() for u in self.iframe_urls.split('\n')]
 
             for url in iframe_urls:
