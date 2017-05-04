@@ -3,7 +3,7 @@ Setting up development environment
 ==================================
 
 Development environment assumes automated deployment as described
-in operations documentation, but with VM as target system.
+in operations documentation, but with a virtual machine as the target system.
 
 Additional pre-requisite to have on the host system:
 
@@ -28,7 +28,7 @@ use Django development server, set debug to yes if needed.
 
 .. note::
    
-   Refer to `Ansible docs <http://docs.ansible.com/ansible/index.html>`__
+   Refer to `Ansible docs <http://docs.ansible.com/ansible/index.html>`_
    for details on using Ansible for automated deployments
    and configuration management over SSH.
 
@@ -48,7 +48,7 @@ Initial setup
 
 * Run::
 
-      ansible-playbook -i inventories/local/hosts.ini playbook.yaml
+      ansible-playbook -i inventories/local/hosts.ini playbook.yaml --e "load_initial_data=yes"
 
 * The app should be accessible under https://127.0.0.1:8080/
   on your host system
@@ -99,3 +99,34 @@ If you have changed Django settings template ``django_settings.py.j2``,
 you need to pass ``--tags django-settings`` to Ansible.
 
 Multiple tags can be supplied.
+
+Troubleshooting running Ansible
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+   You can pass -v flag to ansible-playbook to enable additional output.
+   See `Ansible docs`_ for more info.
+
+Host authenticity
+`````````````````
+
+The first time you use Ansible to connect to Vagrant-based VM on your
+local host, it may report you something along the lines of::
+
+    The authenticity of host '[smartfocus.local]:2222 ([127.0.0.1]:2222)' can't be established.
+
+This is an error propagated from SSH.
+You can freely type yes and hit Enter in that case.
+
+Changed host fingerprint
+````````````````````````
+
+If Ansible fails with ``WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED``,
+it may be because you SSHd into a _different server_ on your
+local host over port 2222 earlier.
+
+This may happen, for example, if you have rebuilt Vagrant VM from scratch.
+
+You might want to find the entry corresponding to your local host 
+in your ~/.ssh/known_hosts, delete that line and restart Ansible playbook.
