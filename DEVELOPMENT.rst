@@ -63,30 +63,27 @@ General syntax is as above, except to speed it up
 it’s recommended to narrow down which tasks are executed
 by passing ``--skip-tags`` and/or ``--tags`` options to Ansible.
 
-.. note::
+Some examples:
 
-   Some examples:
-   
-   * After the first successful run of ansible-playbook
-     you would typically supply ``--skip-tags system``
-     every time so that Ansible doesn’t keep upgrading system packages
-     and such.
-   
-   * ``--tags django-settings`` only runs tasks
-     needed to apply changes to Django settings,
-     all other tasks are skipped automatically.
+* After the first successful run of ansible-playbook
+  you would typically supply ``--skip-tags system``
+  every time so that Ansible doesn’t keep upgrading system packages
+  and such.
 
-     (This might be needed if you update the debug flag or edit template
-     at ``django_settings.py.j2``.)
-   
-   * ``--tags app-code`` only runs tasks necessary for the changes
-     to your code, static assets or templates to take effect.
+* ``--tags django-settings`` only runs tasks
+  needed to apply changes to Django settings,
+  all other tasks are skipped automatically.
 
-     (If you’re running the `development server <Development server>`_
-     under VM and did not change static assets, this is not necessary.)
+  You need to run this if you have changed the debug flag, for example.
 
-   For details on which tags can be specified or skipped,
-   see task definitions in the playbook at ops/playbook.yaml.
+* ``--tags app-code`` only runs tasks necessary for the changes
+  to your code, static assets or templates to take effect.
+
+  If you’re running the `development server <Development server>`_
+  under VM and did not change static assets, this is not necessary.
+
+For details on which tags can be specified or skipped,
+see task definitions in the playbook at ops/playbook.yaml.
 
 .. note::
 
@@ -100,9 +97,7 @@ to set the ``debug`` to ``yes`` in inventory variables.
 This will cause a few adjustments, for example Django will output
 full tracebacks on app-level errors.
 
-.. note::
-
-   Don’t use the ``debug`` flag in production, it’s a security hole.
+**Don’t use the ``debug`` flag in production, it’s a security hole.**
 
 Development server
 ``````````````````
@@ -129,7 +124,7 @@ Don’t use development server in production.
          ./manage.py runserver 0.0.0.0:8000
 
      The app should be accessible under https://127.0.0.1:8000/
-     (note changed port number) on your host system.
+     on your host system.
 
    * If you run with ``ssl`` flag set in development environment,
      you might want to start SSL-enabled development server::
@@ -137,10 +132,16 @@ Don’t use development server in production.
          ./manage.py runsslserver 0.0.0.0:8000
 
      The app should be accessible under https://127.0.0.1:8000/
-     (note changed port number) on your host system.
+     on your host system.
      
      It should give you a warning about bad SSL certificate; that is normal
      because the certificate is self-signed for development purposes.
+
+     (This documentation doesn’t cover running with HTTPS in develpoment.)
+
+  Note that when you use development server, the site is accessible
+  under port 8000 of the host system, as opposed to port 8080
+  with normal Gunicorn + Nginx server combination.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
