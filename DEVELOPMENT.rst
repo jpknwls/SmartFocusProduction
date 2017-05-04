@@ -65,26 +65,32 @@ by passing ``--skip-tags`` and/or ``--tags`` options to Ansible.
 
 .. note::
 
-   Multiple tags can be supplied. See `Ansible docs`_ for more info.
+   Some examples:
+   
+   * After the first successful run of ansible-playbook
+     you would typically supply ``--skip-tags system``
+     every time so that Ansible doesn’t keep upgrading system packages
+     and such.
+   
+   * ``--tags django-settings`` only runs tasks
+     needed to apply changes to Django settings,
+     all other tasks are skipped automatically.
+
+     (This might be needed if you update the debug flag or edit template
+     at ``django_settings.py.j2``.)
+   
+   * ``--tags app-code`` only runs tasks necessary for the changes
+     to your code, static assets or templates to take effect.
+
+     (If you’re running the `development server <Development server>`_
+     under VM and did not change static assets, this is not necessary.)
 
    For details on which tags can be specified or skipped,
    see task definitions in the playbook at ops/playbook.yaml.
 
-   Some examples:
-   
-   * After first successful run of ansible-playbook
-     you would typically supply ``--skip-tags system``
-     every time so that Ansible doesn’t keep upgrading system packages.
-   
-   * If you have only changed Django settings template ``django_settings.py.j2``,
-     you can pass ``--tags django-settings`` to Ansible. That would exclude
-     all other tags automatically.
-   
-   * Commonly you’d pass ``--tags app-code`` to make changes in your code take
-     effect, although this one is *not* necessary if you’re running
-     the development server under VM, because (a) code changes are mirrored
-     and (b) development server restarts automatically.
-     See `Development server`_ section of this documentation.
+.. note::
+
+   Multiple tags can be combined. See `Ansible docs`_ for more info.
 
 Debug mode
 ``````````
