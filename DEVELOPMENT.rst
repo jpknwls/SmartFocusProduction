@@ -100,33 +100,36 @@ you need to pass ``--tags django-settings`` to Ansible.
 
 Multiple tags can be supplied.
 
-Troubleshooting running Ansible
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Troubleshooting
+~~~~~~~~~~~~~~~
 
 .. note::
 
-   You can pass -v flag to ansible-playbook to enable additional output.
+   You can pass ``-v`` flag to ansible-playbook to enable additional output.
    See `Ansible docs`_ for more info.
 
 Host authenticity
 `````````````````
-
-The first time you use Ansible to connect to Vagrant-based VM on your
-local host, it may report you something along the lines of::
+The first time you use SSH to connect to Vagrant-based VM on your
+local host, it may report something along the lines of::
 
     The authenticity of host '[smartfocus.local]:2222 ([127.0.0.1]:2222)' can't be established.
 
-This is an error propagated from SSH.
-You can freely type yes and hit Enter in that case.
+Ansible uses SSH, and it will propagate that message and prompt you
+to input "yes" or "no" on first run.
+
+You can freely type "yes" and hit Enter in that case.
 
 Changed host fingerprint
 ````````````````````````
+If Ansible fails with “WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED”,
+this again is an error propagated from SSH level.
 
-If Ansible fails with ``WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED``,
-it may be because you SSHd into a _different server_ on your
-local host over port 2222 earlier.
+It happens because you earlier accessed a _different server_
+under the same hostname.
 
-This may happen, for example, if you have rebuilt Vagrant VM from scratch.
+This may happen, for example, if you have rebuilt Vagrant VM from scratch,
+of if you operate more than one VM.
 
 You might want to find the entry corresponding to your local host 
 in your ~/.ssh/known_hosts, delete that line and restart Ansible playbook.
