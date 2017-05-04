@@ -56,49 +56,85 @@ Initial setup
 Iterating
 ~~~~~~~~~
 
-To make development easier you might want
-to set the ``debug`` to ``yes`` in inventory variables,
+Typically whenever you make changes to code, static assets, templates,
+Django settings, etc. you need to re-run ansible-playbook.
 
-Using development server
-````````````````````````
+General syntax is as above, except to speed it up
+it’s recommended to narrow down which tasks are executed
+by passing ``--skip-tags`` and/or ``--tags`` options to Ansible.
+
+.. note::
+
+   Multiple tags can be supplied. See `Ansible docs`_ for more info.
+
+   For details on which tags can be specified or skipped,
+   see task definitions in the playbook at ops/playbook.yaml.
+
+   Some examples:
+   
+   * After first successful run of ansible-playbook
+     you would typically supply ``--skip-tags system``
+     every time so that Ansible doesn’t keep upgrading system packages.
+   
+   * If you have only changed Django settings template ``django_settings.py.j2``,
+     you can pass ``--tags django-settings`` to Ansible. That would exclude
+     all other tags automatically.
+   
+   * Commonly you’d pass ``--tags app-code`` to make changes in your code take
+     effect, although this one is *not* necessary if you’re running
+     the development server under VM, because (a) code changes are mirrored
+     and (b) development server restarts automatically.
+     See `Development server`_ section of this documentation.
+
+Debug mode
+``````````
+To make development easier you might want
+to set the ``debug`` to ``yes`` in inventory variables.
+
+This will cause a few adjustments, for example Django will output
+full tracebacks on app-level errors.
+
+.. note::
+
+   Don’t use the ``debug`` flag in production, it’s a security hole.
+
+Development server
+``````````````````
 You can use a SSL-enabled development server which provides automated
 code reload.
 
-* Change into ops/ directory
+This requires the debug flag to be set.
+Don’t use development server in production.
 
-* SSH into your Vagrant VM::
+# Change into ops/ directory
+
+# SSH into your Vagrant VM::
 
       vagrant ssh
 
-* Change to src/ directory::
+# Change to src/ directory::
 
       cd app/src
 
-* Stop Nginx and Gunicorn::
+# Start development server.
 
-      sudo service nginx stop; sudo service gunicorn stop
+  * To start the development server::
 
-* Start SSL-enabled development server::
-  
-      ./manage.py runsslserver 0.0.0.0:8000
+        ./manage.py runserver 0.0.0.0:8000
 
-* The app should be accessible under https://127.0.0.1:8000/
-  (note changed port number) on your host system
+    The app should be accessible under https://127.0.0.1:8000/
+    (note changed port number) on your host system.
 
-Making Ansible skip tasks
-`````````````````````````
-To speed up subsequent deployments after initial setup is done
-flags such as ``--skip-tags  system`` can be passed. For details
-of which tags can be specified or skipped see Ansible playbook definition.
+  * If you run with ``ssl`` flag set in development environment,
+    you might want to start SSL-enabled development server::
+    
+        ./manage.py runsslserver 0.0.0.0:8000
 
-Commonly you’d pass ``--tags app-code`` to make changes in your code take
-effect. Note: This is the command that’s not necessary if you’re running
-a development server.
-
-If you have changed Django settings template ``django_settings.py.j2``,
-you need to pass ``--tags django-settings`` to Ansible.
-
-Multiple tags can be supplied.
+    The app should be accessible under https://127.0.0.1:8000/
+    (note changed port number) on your host system.
+    
+    It should give you a warning about bad SSL certificate; that is normal
+    because the certificate is self-signed for development purposes.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
