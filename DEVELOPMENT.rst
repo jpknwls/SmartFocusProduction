@@ -48,11 +48,11 @@ Initial setup
 Same as described in Operations documentation (see Process)
 with following changes:
 
+* Target system preparation is taken care of by Vagrant:
+  run ``vagrant up`` from inside the ops/ directory
+
 * The example inventory template you should duplicate and edit is
   _example-vm/ (*not* _example/)
-
-* Before you run the ansible-playbook command,
-  run ``vagrant up`` form inside the ops/ directory
 
 * When you run ansible-playbook command,
   do *not* pass it ``push_mode=rsync`` flag

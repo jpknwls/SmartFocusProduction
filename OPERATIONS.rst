@@ -97,9 +97,8 @@ Directory structure::
 Process
 ~~~~~~~
 
-#. Prepare target system according to pre-requisites above.
-   Note the hostname you use to SSH (it can be the same as your
-   actual domain name or it may differ)
+#. Prepare target system according to pre-requisites above
+   (for example, launch an instance in AWS EC2 cloud)
 
 #. Duplicate _example/ inventory directory under inventories/
    and rename it to reflect your target system’s environment
