@@ -139,9 +139,9 @@ Don’t use development server in production.
 
      (This documentation doesn’t cover running with HTTPS in develpoment.)
 
-  Note that when you use development server, the site is accessible
-  under port 8000 of the host system, as opposed to port 8080
-  with normal Gunicorn + Nginx server combination.
+   Note that when you use development server, the site is accessible
+   under port 8000 of the host system, as opposed to port 8080
+   with normal Gunicorn + Nginx server combination.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
