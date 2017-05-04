@@ -3,7 +3,14 @@ Setting up development environment
 ==================================
 
 Development environment assumes automated deployment as described
-in operations documentation, but with a virtual machine as the target system.
+in Operations documentation, but with a virtual machine as the target system.
+Make sure you read the Operations documentation first.
+
+Summary of what’s different when you deploy locally under VM:
+use Vagrant, use Ansible inventory adapted to Vagrant,
+don’t pass the push_mode=rsync extra variable to Ansible.
+(Optionally during active development:
+use Django development server, set debug to yes if needed.)
 
 Additional pre-requisite to have on the host system:
 
@@ -13,18 +20,18 @@ Notes about how VM is configured with the provided Vagrantfile:
 
 * Port 80 from development system is mirrored to 8080 on host,
   and port 8000 is mirrored to 8000.
+  
+  Host system should have corresponding ports available.
 
-* Project root under will be mounted in your VM under /home/vagrant/app/.
-  That means you don’t have to push the code with rsync, since any changes
-  done in working directory will be reflected inside the VM.
+* Project root will be mounted in your VM under /home/vagrant/app/.
 
-Workflow stays as above with typical automated deployment, but see below.
+  This means you don’t have to push the code with rsync, as any changes
+  in your working directory will be reflected inside the VM.
 
-Summary of differences: use Vagrant, use Ansible inventory adapted to Vagrant,
-don’t pass push_mode=rsync to Ansible.
-
-Optionally during active development:
-use Django development server, set debug to yes if needed.
+  This also means that logs and other byproducts of app operation
+  will be mirrored onto host system as siblings of your repository root
+  directory, so make sure your directory structure is set up as
+  described in the Operations doc.
 
 .. note::
    
