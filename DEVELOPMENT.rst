@@ -125,7 +125,7 @@ Changed host fingerprint
 If Ansible fails with “WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED”,
 this again is an error propagated from SSH level.
 
-It happens because you earlier accessed a _different server_
+It happens because you earlier accessed a *different server*
 under the same hostname.
 
 This may happen, for example, if you have rebuilt Vagrant VM from scratch,
