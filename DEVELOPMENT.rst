@@ -112,35 +112,35 @@ code reload.
 This requires the debug flag to be set.
 Don’t use development server in production.
 
-# Change into ops/ directory
+#. Change into ops/ directory
 
-# SSH into your Vagrant VM::
+#. SSH into your Vagrant VM::
 
-      vagrant ssh
+       vagrant ssh
 
-# Change to src/ directory::
+#. Change to src/ directory::
 
-      cd app/src
+       cd app/src
 
-# Start development server.
+#. Start development server.
 
-  * To start the development server::
+   * To start the development server::
 
-        ./manage.py runserver 0.0.0.0:8000
+         ./manage.py runserver 0.0.0.0:8000
 
-    The app should be accessible under https://127.0.0.1:8000/
-    (note changed port number) on your host system.
+     The app should be accessible under https://127.0.0.1:8000/
+     (note changed port number) on your host system.
 
-  * If you run with ``ssl`` flag set in development environment,
-    you might want to start SSL-enabled development server::
-    
-        ./manage.py runsslserver 0.0.0.0:8000
+   * If you run with ``ssl`` flag set in development environment,
+     you might want to start SSL-enabled development server::
+     
+         ./manage.py runsslserver 0.0.0.0:8000
 
-    The app should be accessible under https://127.0.0.1:8000/
-    (note changed port number) on your host system.
-    
-    It should give you a warning about bad SSL certificate; that is normal
-    because the certificate is self-signed for development purposes.
+     The app should be accessible under https://127.0.0.1:8000/
+     (note changed port number) on your host system.
+     
+     It should give you a warning about bad SSL certificate; that is normal
+     because the certificate is self-signed for development purposes.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
