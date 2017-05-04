@@ -45,20 +45,23 @@ Notes about how VM is configured with the provided Vagrantfile:
 Initial setup
 ~~~~~~~~~~~~~
 
-* Duplicate _example-vm/ inventory directory under inventories/
-  and rename, below assumes you’ve used "local" as environment name
-  in this case
+Same as described in Operations documentation (see Process)
+with following changes:
 
-* Change into ops/ directory
+* The example inventory template you should duplicate and edit is
+  _example-vm/ (*not* _example/)
 
-* Run ``vagrant up``
+* Before you run the ansible-playbook command,
+  run ``vagrant up`` form inside the ops/ directory
 
-* Run::
+* When you run ansible-playbook command,
+  do *not* pass it ``push_mode=rsync`` flag
 
-      ansible-playbook -i inventories/local/hosts.ini playbook.yaml --e "load_initial_data=yes"
+* In the end the app would be
+  accessible under https://127.0.0.1:8080/.
 
-* The app should be accessible under https://127.0.0.1:8080/
-  on your host system
+  (You can customize domain_name in your local VM inventory
+  if you add corresponding alias to your /etc/hosts.)
 
 Iterating
 ~~~~~~~~~

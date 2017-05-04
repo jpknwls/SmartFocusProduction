@@ -97,22 +97,39 @@ Directory structure::
 Process
 ~~~~~~~
 
-* Duplicate _example/ inventory directory under inventories/
-  and rename it to reflect your target environment (for example, "production")
+#. Prepare target system according to pre-requisites above.
+   Note the hostname you use to SSH (it can be the same as your
+   actual domain name or it may differ)
 
-* Edit contents of inventory files to reflect specifics of your deployment,
-  required items include: target host name, domain name, secret keys
+#. Duplicate _example/ inventory directory under inventories/
+   and rename it to reflect your target system’s environment
+   (for example, "production" or "staging")
 
-* Change into ops/ directory
+#. Edit files in the copied inventory directory to reflect specifics
+   of your setup, typically at least the following is required:
 
-* Run::
+   * ``ansible_host`` and ``ansible_private_key_file`` in hosts.ini
 
-      ansible-playbook -i inventories/<env>/hosts.ini playbook.yaml -e "push_mode=rsync load_initial_data=yes"
+   * ``domain_name``, ``ssl_email``, ``django_secret`` in vars.yaml
 
-  The command will deploy current code in your working directory
-  onto the server specified in <env>/hosts.ini.
+#. Run the following from inside the ops/ directory::
 
-* The app should be accessible under https://<your_domain_name>/.
+       ansible-playbook -i inventories/<env>/hosts.ini playbook.yaml -e "push_mode=rsync load_initial_data=yes"
+
+   The command will make Ansible connect to the system specified
+   under ansible_host in hosts.ini and do the following:
+
+   * Prepare the system—install required packages,
+     configure and enable services
+
+   * Request SSL certificate
+
+   * Prepare the app—upload the contents of your working directory
+     into /home/<user>/app/, create DB schema, load initial data,
+     compile static assets
+
+#. As a result the app should be accessible
+   under https://<domain_name>/
 
 Saving and loading data
 ```````````````````````
