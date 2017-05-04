@@ -8,7 +8,6 @@
     nginx_default_root: /usr/share/nginx/html
     certbot_webroot: "{{ nginx_default_root }}"
     letsencrypt_live_root: /etc/letsencrypt/live
-    ssl: true
 
     push_mode: none
     # To be overridden in --extra-vars when needed.
@@ -83,19 +82,30 @@
         src=/etc/nginx/sites-available/default
         dest=/etc/nginx/sites-enabled/default
         state=link
+      when: ssl
+      tags: ssl
+
+    - name: start nginx
+      become: true
+      service: name=nginx state=restarted
+      when: ssl
       tags: ssl
 
     - name: set up ssl cert
       become: true
       command: certbot certonly --non-interactive --agree-tos --email {{ ssl_email }} --webroot -w {{ certbot_webroot }} -d {{ domain_name }}
-      # If this doesn’t work, it’s likely because of using an IP in dev.
-      ignore_errors: yes
+      when: ssl
       tags: ssl
+
+
+
 
     - name: disable default nginx vhost
       become: true
       file: path=/etc/nginx/sites-enabled/default state=absent
-      tags: nginx, ssl
+      notify:
+        - restart nginx
+      tags: nginx
 
     - name: create our nginx vhost
       become: true

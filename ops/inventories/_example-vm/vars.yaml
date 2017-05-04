@@ -2,9 +2,6 @@
 # Domain name under which the app will be served
 domain_name: 127.0.0.1
 
-# Your email, to be supplied when creating SSL certificate
-ssl_email:
-
 # Make this a really random and long string.
 # One limitation: it must not contain character ' (single quote)
 django_secret:
@@ -14,3 +11,7 @@ group: vagrant
 
 # High security risk. Only set in development
 debug: no
+
+# SSL certificates can’t be issued on local hostnames
+ssl: no
+ssl_email: ''

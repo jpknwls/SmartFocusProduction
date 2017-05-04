@@ -2,6 +2,9 @@
 # Domain name under which the app will be served
 domain_name: example.com
 
+# Is recommended
+ssl: yes
+
 # Your email, to be supplied when creating SSL certificate
 ssl_email:
 

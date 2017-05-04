@@ -25,8 +25,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
-SECURE_SSL_REDIRECT = True
-
 
 # Application definition
 
