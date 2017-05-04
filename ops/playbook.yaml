@@ -123,10 +123,9 @@
         - restart nginx
       tags: nginx
 
-    - name: start nginx
+    - name: enable nginx
       become: true
-      service: name=nginx state=started
-      tags: nginx
+      service: name=nginx enabled=yes
 
 
 
@@ -154,6 +153,8 @@
       template:
         src=templates/django_settings.py.j2
         dest={{ project_home }}/src/{{ appname }}/settings.py
+      notify:
+        - restart gunicorn
       tags: webapp, django-settings, app-code
 
 
@@ -177,6 +178,10 @@
       notify:
         - restart gunicorn
       tags: gunicorn
+
+    - name: enable gunicorn
+      become: true
+      service: name=gunicorn enabled=yes
 
 
 
@@ -203,8 +208,8 @@
   handlers:
     - name: restart nginx
       become: true
-      service: name=nginx state=restarted
+      service: name=nginx state=reloaded
 
     - name: restart gunicorn
       become: true
-      service: name=gunicorn state=restarted
+      service: name=gunicorn state=reloaded
