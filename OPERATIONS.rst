@@ -127,8 +127,7 @@ Process
      into /home/<user>/app/, create DB schema, load initial data,
      compile static assets
 
-#. As a result the app should be accessible
-   under https://<domain_name>/
+#. Verify that the app is accessible under https://<domain_name>/
 
 Saving and loading data
 ```````````````````````
