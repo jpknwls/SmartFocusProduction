@@ -30,7 +30,7 @@ Packages:
 
 * Ansible 2.3.0.0
 
-Directory structure::
+Directory structure you should have before doing operations-related tasks::
 
     /
     Base directory referred to as “project root” or “project home”.
@@ -61,8 +61,18 @@ Directory structure::
     │       ┣━━━playbook.yaml
     │       ┃   Ansible playbook automating system setup and app deployment
     │       ┃
+    │       ┣━━━vars.yaml
+    │       ┃   Some extra variables used by Ansible
+    │       ┃
     │       ┣━━━requirements.txt
     │       ┃   Python package requirements
+    │       ┃
+    │       ┣━━━templates/
+    │       ┃   Some configuration files are generated from these templates
+    │       ┃   by Ansible when you run ansible-playbook.
+    │       ┃   These templates make use of variables
+    │       ┃   defined in playbook.yaml and vars.yaml files,
+    │       ┃   as well as inventory-specific vars.yaml and hosts.ini
     │       ┃
     │       ┋
     │       ┃
