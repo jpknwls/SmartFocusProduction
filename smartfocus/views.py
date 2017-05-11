@@ -69,16 +69,16 @@ def page(request, page_slug, active_store, managed_stores, *args, **kwargs):
     if page.level == 'STORE_LEVEL':
         return redirect('store_page', active_store.id, page_slug)
 
-    urls = page.iframe_urls.split('\n')
-
     custom_template_path = os.path.join(
         CUSTOM_PAGE_TEMPLATE_ROOT,
-        page.iframe_urls)
+        page.contents)
 
     templates_to_try = [
         custom_template_path,
         'iframe_page.html',
     ]
+
+    urls = page.contents.split('\n')
 
     return render(request, templates_to_try, dict(
         page=page,

@@ -9,11 +9,7 @@ from django.core import validators
 from django import template
 
 
-CUSTOM_PAGE_TEMPLATE_ROOT = 'pages/'
-"""
-For pages which specify custom template, they’ll be found under this path.
-Relative to template root specified in Django settings.
-"""
+IFRAME_PAGE_TEMPLATE = 'iframe_page.html'
 
 
 class Page(models.Model):
@@ -48,19 +44,28 @@ class Page(models.Model):
             "Used in URLs and to show appropriate icon.<br>"
             "Example: <tt>newinventory</tt>")
 
+    template_name = models.CharField(
+        default=IFRAME_PAGE_TEMPLATE,
+        max_length=150,
+        help_text=
+            "Template filename, relative to <tt>templates/</tt> directory.")
+
+    authorized_groups = models.ManyToManyField(
+        'auth.Group',
+    )
+
     iframe_urls = models.TextField(
-        "chain-level page contents",
+        "chain-level iframe URLs",
         default="",
         blank=True,
         help_text=
-            "For a chain-level page this field must contain either: "
-            "<ol>"
-            "<li>At least one iframe URL, if multiple then one per line"
-            "<li>One template filename, relative to <tt>templates/pages/</tt>"
-            "</ol>"
-            "NOTE: if this page is store-level, leave this field empty. "
-            "Instead, assign contents in admin sections "
-            "corresponding to individual stores.")
+            "If using {iframe_page_template}: for a chain-level page "
+            "this field must specify which iframes to display. "
+            "Enter at least one iframe URL, if multiple then one per line. "
+            "NOTE: if this page is store-level, leave these contents empty; "
+            "instead, assign iframe URLs in sections of the admin "
+            "that correspond to individual stores."
+            .format(iframe_page_template=IFRAME_PAGE_TEMPLATE))
 
     def __unicode__(self):
         return self.title
@@ -76,7 +81,7 @@ class Page(models.Model):
 
         if self.level == 'STORE_LEVEL':
             self.clean_store_level()
-        elif self.level == 'CHAIN_LEVEL':
+        elif self.level == 'CHAIN_LEVEL' and self.template_name == IFRAME_PAGE_TEMPLATE:
             self.clean_chain_level()
 
     def clean_store_level(self):
@@ -91,6 +96,27 @@ class Page(models.Model):
                     "Please specify page contents in sections "
                     "corresponding to individual stores "
                     "and leave chain-level contents empty."
+            })
+
+    def clean_template_name(self):
+        """
+        Checks if template path is correct and the template
+        has no syntax errors.
+        """
+        try:
+            template.loader.get_template(self.template_name)
+
+        except template.loader.TemplateDoesNotExist:
+            raise exceptions.ValidationError({
+                'template_name': "Template with this name does not exist."
+            })
+
+        except template.TemplateSyntaxError, exc:
+            raise exceptions.ValidationError({
+                'template_name':
+                    "Syntax error in template {path}! {err} "
+                    "(Please refer to Django template syntax documentation.) "
+                    .format(path=self.template_name, err=unicode(exc))
             })
 
     def clean_chain_level(self):
@@ -121,37 +147,20 @@ class Page(models.Model):
                 "(if more than one URL then each on its own line), "
                 "or exactly one template filename. ")
 
-        # Let’s see if we are given a template path first
-        try:
-            tentative_template_path = os.path.join(
-                CUSTOM_PAGE_TEMPLATE_ROOT,
-                self.iframe_urls)
-            template.loader.get_template(tentative_template_path)
-        except template.loader.TemplateDoesNotExist:
-            valid_template = False
-        except template.TemplateSyntaxError, exc:
-            valid_template = True
-
-            content_field_errors.append(
-                "Template syntax error. {err} "
-                "(Please refer to Django template syntax documentation.) "
-                .format(path=self.iframe_urls, err=unicode(exc)))
-        else:
-            valid_template = True
 
         # If not a template, treat contents as a list of iframe URLs
-        if not valid_template:
-            iframe_urls = [u.strip() for u in self.iframe_urls.split('\n')]
 
-            for url in iframe_urls:
-                try:
-                    validators.URLValidator()(url)
-                except exceptions.ValidationError, e:
-                    content_field_errors.append("{0}: {1}".format(
-                        url,
-                        ', '.join(e.messages)))
+        iframe_urls = [u.strip() for u in self.iframe_urls.split('\n')]
 
-            self.iframe_urls = '\n'.join(iframe_urls)
+        for url in iframe_urls:
+            try:
+                validators.URLValidator()(url)
+            except exceptions.ValidationError, e:
+                content_field_errors.append("{0}: {1}".format(
+                    url,
+                    ', '.join(e.messages)))
+
+        self.iframe_urls = '\n'.join(iframe_urls)
 
         if len(general_errors + content_field_errors) > 0:
             raise exceptions.ValidationError({

@@ -14,7 +14,7 @@ class StorePageInline(admin.TabularInline):
 class PageAdmin(admin.ModelAdmin):
     list_display = ('slug', 'title', 'level', 'has_all_stores_configured', )
 
-    fields = ('level', ('title', 'slug'), 'description', 'iframe_urls', )
+    fields = ('level', ('title', 'slug'), 'description', 'contents', )
 
     prepopulated_fields = {'slug': ('title', )}
 
