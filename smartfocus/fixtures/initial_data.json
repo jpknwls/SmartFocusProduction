@@ -260,14 +260,14 @@
     "fields": {
         "password": "pbkdf2_sha256$36000$bZ5xCTsWncWF$0wr+lEuiK7DzFoCJOn/mW/2Bri1jnL4V5o3eTqG0ox8=",
         "last_login": null,
-        "is_superuser": false,
+        "is_superuser": true,
         "username": "MY",
         "first_name": "",
         "last_name": "",
         "email": "",
-        "is_staff": false,
+        "is_staff": true,
         "is_active": true,
-        "date_joined": "2017-05-11T09:06:46.867Z",
+        "date_joined": "2017-05-11T09:06:46Z",
         "groups": [],
         "user_permissions": []
     }
@@ -278,14 +278,14 @@
     "fields": {
         "password": "pbkdf2_sha256$36000$d2UFjCX8BSIb$ZrEXCeYVOA+hPNomUvZZWzDAiGOO4Ro6mwOgBp9X9ZA=",
         "last_login": null,
-        "is_superuser": false,
+        "is_superuser": true,
         "username": "SK",
         "first_name": "",
         "last_name": "",
         "email": "",
-        "is_staff": false,
+        "is_staff": true,
         "is_active": true,
-        "date_joined": "2017-05-11T09:06:52.153Z",
+        "date_joined": "2017-05-11T09:06:52Z",
         "groups": [],
         "user_permissions": []
     }
@@ -296,14 +296,14 @@
     "fields": {
         "password": "pbkdf2_sha256$36000$wYql7EdP1w63$xt2v1ztBy9KjViNNe2dNR9iP6aRQuoMYrjSfQSaNUb0=",
         "last_login": null,
-        "is_superuser": false,
+        "is_superuser": true,
         "username": "LWT",
         "first_name": "",
         "last_name": "",
         "email": "",
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2017-05-11T09:06:58.579Z",
+        "date_joined": "2017-05-11T09:06:58Z",
         "groups": [],
         "user_permissions": []
     }
@@ -314,14 +314,14 @@
     "fields": {
         "password": "pbkdf2_sha256$36000$7at81T0QLxSz$bHxUF0AaAe035Uwodc3X+8U8+GeDdDuqdwS0EnNpzI0=",
         "last_login": null,
-        "is_superuser": false,
+        "is_superuser": true,
         "username": "ZJ",
         "first_name": "",
         "last_name": "",
         "email": "",
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2017-05-11T09:07:03.113Z",
+        "date_joined": "2017-05-11T09:07:03Z",
         "groups": [],
         "user_permissions": []
     }
