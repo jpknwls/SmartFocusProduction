@@ -107,6 +107,13 @@
         - restart nginx
       tags: nginx
 
+    - name: configure nginx
+      become: true
+      template:
+        src=templates/nginx.conf.j2
+        dest=/etc/nginx/conf.d/nginx.conf
+      tags: nginx
+
     - name: create our nginx vhost
       become: true
       template:
