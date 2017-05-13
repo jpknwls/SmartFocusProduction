@@ -6,20 +6,22 @@ upstream {{ appname }} {
   server unix:/var/run/gunicorn/gunicorn.sock fail_timeout=0;
 }
 
+{% if domain_name %}
 server {
     listen 80 default_server;
     server_name _;
     return 444;
 }
+{% endif %}
 
 server {
-    listen 80;
+    listen 80{% if not domain_name %} default_server{% endif %};
 
     {% if ssl %}
-    listen 443 ssl;
+    listen 443 ssl{% if not domain_name %} default_server{% endif %};
     {% endif %}
 
-    server_name {{ domain_name }};
+    server_name {% if domain_name %}{{ domain_name }}{% else %}_{% endif %};
 
     {% if ssl %}
     ssl_certificate {{ letsencrypt_live_root }}/{{ domain_name }}/fullchain.pem;

@@ -10,7 +10,11 @@ from settings_base import *
 
 
 ALLOWED_HOSTS = [
+{% if domain_name %}
     '{{ domain_name }}',
+{% else %}
+    '*',
+{% endif %}
 ]
 
 
