@@ -211,6 +211,14 @@
 
 
 
+    - name: force reload services
+      become: true
+      service: name={{ item }} state=reloaded
+      with_items:
+        - gunicorn
+        - nginx
+      tags: webapp, gunicorn, nginx, app-code, django-settings
+
 
   handlers:
     - name: restart nginx
