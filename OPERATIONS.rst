@@ -30,7 +30,12 @@ Packages:
 
 * Ansible 2.3.0.0
 
-Directory structure you should have before doing operations-related tasks::
+Ensure you don’t have Unicode characters or spaces
+in the path to base directory for the app,
+otherwise ansible-playbook will fail with an error.
+
+Directory structure
+```````````````````
 
     /
     Base directory referred to as “project root” or “project home”.
@@ -96,7 +101,7 @@ Directory structure you should have before doing operations-related tasks::
     │
     │
     │   Created automatically during operation on target system
-    │   (mirrored onto host system in VM-based development setup):
+    │   (you won’t see these unless you use VM-based development setup):
     │
     ├───static/
     ├───db.sqlite3
