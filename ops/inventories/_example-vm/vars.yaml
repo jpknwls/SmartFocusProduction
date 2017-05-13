@@ -1,19 +1,20 @@
 ---
-# Domain name under which the app will be served,
-# you can alias it to something like <appname>.local
-# if you add a corresponding entry to /etc/hosts on your host machine
 domain_name: 127.0.0.1
+# Domain name under which the app will be served.
+# You can alias it to something like <appname>.local
+# if you add a corresponding entry to /etc/hosts on your host machine
 
-# Make this a really random and long string.
-# One limitation: it must not contain character ' (single quote)
 django_secret:
+# Required. Make this a really random and long string.
+# One limitation: it must not contain character ' (single quote)
 
 user: vagrant
 group: vagrant
 
-# High security risk. Only set in development
 debug: no
+# High security risk. Don’t use in production
 
-# SSL certificates can’t be issued on local hostnames
 ssl: no
 ssl_email: ''
+# SSL certificates can’t be issued on local hostnames, so
+# leave this disabled

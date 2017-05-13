@@ -1,20 +1,32 @@
 ---
-# Domain name under which the app will be served
 domain_name: example.com
+# Domain name under which the app will be served.
+#
+# Recommended.
+# If not specified, app will be available from any domain
+# which is generally not desirable in production.
+#
+# If you want to use SSL,
+# domain_name can’t be an IP or default public AWS EC2 instance DNS.
+# See:
+# https://community.letsencrypt.org/t/policy-forbids-issuing-for-name-on-amazon-ec2-domain/12692/4
 
-# Is recommended
 ssl: yes
+# If set to yes, app works under HTTPS only.
+# Recommended.
 
-# Your email, to be supplied when creating SSL certificate
 ssl_email:
+# Your email, to be supplied when creating SSL certificate.
+# Required if ssl is set to yes.
 
-# Make this a really random and long string.
-# One limitation: it must not contain character ' (single quote)
 django_secret:
+# Required. Make this a really random and long string,
+# which is important to ensure strong security.
+# One limitation: it must not contain character ' (single quote)
 
-# You might want to use a dedicated user in production
 user: ubuntu
 group: ubuntu
+# You might want to use a dedicated user in production
 
-# High security risk. Only set in development
 debug: no
+# High security risk. Only set to yes in development
