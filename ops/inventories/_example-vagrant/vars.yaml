@@ -1,0 +1,27 @@
+---
+domain_name:
+
+admins: []
+
+secret: rio34h9fys&*DGI#YGURFSUE&FSIHRUWk3u4tIWYF
+# Required. Make this a really random and long string.
+# One limitation: it must not contain character ' (single quote)
+
+db_user_pass: test-password
+# Required. Password to be used for the DB user. Plain text, keep safe.
+
+user: ubuntu
+group: ubuntu
+
+unsafe_debug: yes
+# High security risk, don’t use on publicy available machines
+
+log_level: debug
+
+ssl: no
+ssl_email:
+# Note: SSL certificates can’t be issued on local hostnames
+
+push_mode: none
+# Code is not pushed, since working directory
+# is mirrored within virtual machine

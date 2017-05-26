@@ -1,6 +1,7 @@
 ---
-domain_name: example.com
+domain_name:
 # Domain name under which the app will be served.
+# For example, example.com
 #
 # Recommended.
 # If not specified, app will be available from any domain
@@ -19,14 +20,28 @@ ssl_email:
 # Your email, to be supplied when creating SSL certificate.
 # Required if ssl is set to yes.
 
-django_secret:
+secret:
 # Required. Make this a really random and long string,
 # which is important to ensure strong security.
 # One limitation: it must not contain character ' (single quote)
+
+db_user_pass:
+# Required. Password to be used for the DB user. Plain text, keep safe.
 
 user: ubuntu
 group: ubuntu
 # You might want to use a dedicated user in production
 
-debug: no
+unsafe_debug: no
 # High security risk. Only set to yes in development
+
+log_level: info
+# Web app logs will only record messages of this importance and higher.
+# Possible values: debug, info, warning, error
+
+push_mode: sync
+
+admins:
+- { name: "", email: "" }
+# List of people to send server error post-mortems to
+# (no effect if unsafe_debug is set to yes)

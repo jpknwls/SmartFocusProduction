@@ -84,10 +84,4 @@ Django project structure::
     ┃
     ┗━━━ops/
         ┃
-        ┣━━━templates/
-        ┃   ┃
-        ┃   ┣━━━django_settings.py.j2
-        ┃   ┋   This is the file environment-specific Django settings
-        ┃       are generated from during deployments (see OPERATIONS.rst)
-        ┃
         ┋

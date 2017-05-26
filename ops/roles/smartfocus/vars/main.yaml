@@ -1,0 +1,10 @@
+---
+project_home: /home/{{ user }}/smartfocus-site
+module_name: smartfocus
+repo_root: "{{ project_home }}/src"
+logs_root: "{{ project_home }}"
+static_root: "{{ project_home }}/static"
+static_url: /static
+gunicorn_socket_path: /var/run/gunicorn/{{ domain_name|to_uuid }}.sock
+db_name: smartfocus
+db_user_name: smartfocus

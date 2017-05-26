@@ -1,0 +1,59 @@
+---
+dependencies:
+
+  - role: django_project
+    tags: [django]
+    django_local_repo_root: "{{ inventory_dir }}/../../.."
+    django_domain_name: "{{ domain_name }}"
+    django_ssl: "{{ ssl }}"
+    django_app_root: "{{ repo_root }}"
+    django_project_module: "{{ module_name }}"
+    django_pip_dependencies: "{{ repo_root }}/requirements.txt"
+    django_sqlite_db_path: "{{ project_home }}/db.sqlite3"
+    django_secret_key: "{{ secret }}"
+    django_admins: "{{ admins }}"
+    django_static_root: "{{ static_root }}"
+    django_static_url: "{{ static_url }}/"
+    django_debug: "{{ unsafe_debug }}"
+    django_log_level: "{{ log_level }}"
+    django_initial_data_fixture:
+      load: false
+      path: "{{ repo_root }}/{{ module_name }}/fixtures/initial_data.json"
+    django_push_mode: "{{ push_mode }}"
+    django_settings_extra: []
+
+  - role: wsgi_server
+    tags: [wsgi]
+    wsgi_conf_name: "smartfocus-site"
+    wsgi_app_module: "{{ module_name }}.wsgi"
+    wsgi_sock_path: "{{ gunicorn_socket_path }}"
+    wsgi_worker_count: 1
+    wsgi_timeout_sec: 60
+    wsgi_working_dir: "{{ repo_root }}"
+    wsgi_pythonpath: "{{ repo_root }}"
+    wsgi_run_as:
+      user: "{{ user }}"
+      group: "{{ group }}"
+    wsgi_gunicorn_loglevel: "{{ log_level }}"
+
+  - role: web_frontend
+    tags: [frontend]
+    become: yes
+    frontend_config_name: smartfocus-site
+    frontend_domain_name: "{{ domain_name }}"
+    frontend_upstream:
+      name: "{{ domain_name|to_uuid }}"
+      socket_path: "{{ gunicorn_socket_path }}"
+    frontend_ssl:
+      enabled: "{{ ssl }}"
+      certbot:
+        active: yes
+        email: "{{ ssl_email }}"
+    frontend_log:
+      access: "{{ logs_root }}/nginx-access.log"
+      error: "{{ logs_root }}/nginx-error.log"
+    frontend_static_locations:
+      - url_path: "{{ static_url }}/"
+        filesystem_alias: "{{ static_root }}/"
+    frontend_50x_html_path: "{{ repo_root }}/static_pages/50x.html"
+    frontend_nginx_default_root: /var/www/html

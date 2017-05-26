@@ -1,0 +1,13 @@
+---
+
+- src: git+https://github.com/strogonoff/ansible-django-project.git
+  version: v0.2-dev10
+  name: django_project
+
+- src: git+https://github.com/strogonoff/ansible-wsgi-server.git
+  version: v0.1
+  name: wsgi_server
+
+- src: git+https://github.com/strogonoff/ansible-web-frontend.git
+  version: v0.2-dev10
+  name: web_frontend
