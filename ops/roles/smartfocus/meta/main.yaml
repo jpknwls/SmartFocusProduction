@@ -4,22 +4,28 @@ dependencies:
   - role: django_project
     tags: [django]
     django_local_repo_root: "{{ inventory_dir }}/../../.."
+    django_push_mode: "{{ push_mode }}"
     django_domain_name: "{{ domain_name }}"
     django_ssl: "{{ ssl }}"
     django_app_root: "{{ repo_root }}"
     django_project_module: "{{ module_name }}"
     django_pip_dependencies: "{{ repo_root }}/requirements.txt"
-    django_sqlite_db_path: "{{ project_home }}/db.sqlite3"
     django_secret_key: "{{ secret }}"
-    django_admins: "{{ admins }}"
+
+    django_sqlite_db_path: "{{ project_home }}/db.sqlite3"
+
     django_static_root: "{{ static_root }}"
     django_static_url: "{{ static_url }}/"
+
     django_debug: "{{ unsafe_debug }}"
     django_log_level: "{{ log_level }}"
+    django_log_file: "{{ logs_root }}/django.log"
+    django_admins: "{{ admins }}"
+
     django_initial_data_fixture:
       load: false
       path: "{{ repo_root }}/{{ module_name }}/fixtures/initial_data.json"
-    django_push_mode: "{{ push_mode }}"
+
     django_settings_extra: []
 
   - role: wsgi_server
@@ -34,6 +40,9 @@ dependencies:
     wsgi_run_as:
       user: "{{ user }}"
       group: "{{ group }}"
+    wsgi_log:
+      access: "{{ logs_root }}/gunicorn-access.log"
+      error: "{{ logs_root }}/gunicorn-error.log"
     wsgi_gunicorn_loglevel: "{{ log_level }}"
 
   - role: web_frontend
