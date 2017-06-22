@@ -23,7 +23,7 @@ dependencies:
     django_admins: "{{ admins }}"
 
     django_initial_data_fixture:
-      load: false
+      load: "{{ load_initial_data }}"
       path: "{{ repo_root }}/{{ module_name }}/fixtures/initial_data.json"
 
     django_settings_extra: []
