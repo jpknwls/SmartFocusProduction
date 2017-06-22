@@ -3,11 +3,11 @@ domain_name:
 
 admins: []
 
-secret: rio34h9fys&*DGI#YGURFSUE&FSIHRUWk3u4tIWYF
+secret: "rio34h9fys&*DGI#YGURFSUE&FSIHRUWk3u4tIWYF"
 # Required. Make this a really random and long string.
 # One limitation: it must not contain character ' (single quote)
 
-db_user_pass: test-password
+db_user_pass: "test-password"
 # Required. Password to be used for the DB user. Plain text, keep safe.
 
 user: ubuntu

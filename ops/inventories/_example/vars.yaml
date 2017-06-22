@@ -12,7 +12,7 @@ domain_name:
 # See:
 # https://community.letsencrypt.org/t/policy-forbids-issuing-for-name-on-amazon-ec2-domain/12692/4
 
-ssl: yes
+ssl: no
 # If set to yes, app works under HTTPS only.
 # Recommended.
 
@@ -20,12 +20,11 @@ ssl_email:
 # Your email, to be supplied when creating SSL certificate.
 # Required if ssl is set to yes.
 
-secret:
+secret: ""
 # Required. Make this a really random and long string,
 # which is important to ensure strong security.
-# One limitation: it must not contain character ' (single quote)
 
-db_user_pass:
+db_user_pass: ""
 # Required. Password to be used for the DB user. Plain text, keep safe.
 
 user: ubuntu
