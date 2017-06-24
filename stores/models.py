@@ -96,7 +96,7 @@ def get_managed_stores(user):
     Returns a QuerySet of ``Store`` instances
     according to user’s management role.
     """
-    if user.is_superuser:
+    if user.is_staff or user.is_superuser:
         return Store.objects.all()
     else:
         return Store.objects.filter(Q(region__manager=user) | Q(manager=user))
