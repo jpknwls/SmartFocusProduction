@@ -13,6 +13,7 @@ disable=
     missing-docstring,redefined-builtin,    # module docstring + unicode_literals
     unused-argument,                        # unused kwargs. yes.
     bad-continuation,                       # I hang my indents, thank you very much
+    wrong-import-position,                  # docstring first, imports after
     too-few-public-methods,
     old-style-class,                        # Django
     no-init,                                # Django
