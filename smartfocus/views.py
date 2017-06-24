@@ -32,22 +32,22 @@ def store_page(request, store_id, page_slug,
     Renders page identified by ``page_slug``
     and associated with the store identified by ``store_id``.
     """
-    store = get_object_or_404(Store, pk=store_id)
-    page = get_object_or_404(Page, slug=page_slug)
+    store_obj = get_object_or_404(Store, pk=store_id)
+    page_obj = get_object_or_404(Page, slug=page_slug)
 
     try:
-        store_page = StorePage.objects.get(store=store, page=page)
+        store_page_obj = StorePage.objects.get(store_obj=store_obj, page_obj=page_obj)
     except StorePage.DoesNotExist:
         urls = []
     else:
-        urls = store_page.iframe_urls.split('\n')
+        urls = store_page_obj.iframe_urls.split('\n')
 
     title = "{page_title} — {store_name}".format(
-        page_title=page.title,
-        store_name=store.name)
+        page_title=page_obj.title,
+        store_name=store_obj.name)
 
     return render(request, 'iframe_page.html', dict(
-        page=page,
+        page_obj=page_obj,
         title=title,
         iframe_urls=urls,
         active_store=active_store,
@@ -64,16 +64,16 @@ def page(request, page_slug, active_store, managed_stores, *args, **kwargs):
     with a list of URLs, or it should contain filename of an existing template.
     If neither, it would be rendered empty.
     """
-    page = get_object_or_404(Page, slug=page_slug)
+    page_obj = get_object_or_404(Page, slug=page_slug)
 
-    if page.level == 'STORE_LEVEL':
+    if page_obj.level == 'STORE_LEVEL':
         return redirect('store_page', active_store.id, page_slug)
 
-    urls = page.iframe_urls.split('\n')
+    urls = page_obj.iframe_urls.split('\n')
 
     custom_template_path = os.path.join(
         CUSTOM_PAGE_TEMPLATE_ROOT,
-        page.iframe_urls)
+        page_obj.iframe_urls)
 
     templates_to_try = [
         custom_template_path,
@@ -81,8 +81,8 @@ def page(request, page_slug, active_store, managed_stores, *args, **kwargs):
     ]
 
     return render(request, templates_to_try, dict(
-        page=page,
-        title=page.title,
+        page_obj=page_obj,
+        title=page_obj.title,
         iframe_urls=urls,
         active_store=active_store,
         managed_stores=managed_stores,

@@ -1,0 +1,22 @@
+[BASIC]
+good-names=idx,_
+const-rgx=urlpatterns|log|.*Formset$|(([A-Z_][A-Z0-9_]*)|(__.*__))$
+
+[TYPECHECK]
+ignored-modules=django
+
+[LOGGING]
+logging-modules=logging,log
+
+[MESSAGES CONTROL]
+disable=
+    missing-docstring,redefined-builtin,    # module docstring + unicode_literals
+    unused-argument,                        # unused kwargs. yes.
+    bad-continuation,                       # I hang my indents, thank you very much
+    too-few-public-methods,
+    old-style-class,                        # Django
+    no-init,                                # Django
+    len-as-condition,                       # Django: this is how you check if there’re any objects in your queryset
+
+[VARIABLES]
+ignored-argument-names=kwargs

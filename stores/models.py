@@ -82,8 +82,8 @@ class StorePage(models.Model):
         for url in iframe_urls:
             try:
                 validators.URLValidator()(url)
-            except ValidationError, e:
-                errors.append("{0}: {1}".format(url, ', '.join(e.messages)))
+            except ValidationError, err:
+                errors.append("{0}: {1}".format(url, ', '.join(err.messages)))
 
         self.iframe_urls = '\n'.join(iframe_urls)
 
@@ -98,8 +98,8 @@ def get_managed_stores(user):
     """
     if user.is_staff or user.is_superuser:
         return Store.objects.all()
-    else:
-        return Store.objects.filter(Q(region__manager=user) | Q(manager=user))
+
+    return Store.objects.filter(Q(region__manager=user) | Q(manager=user))
 
 
 def is_manager(user, store):

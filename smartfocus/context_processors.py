@@ -60,18 +60,18 @@ def pages(request):
     if not request.user.is_authenticated():
         return {}
 
-    pages = {}
-    for p in Page.objects.all():
-        pages[p.slug] = dict(
-            pk=p.pk,
-            slug=p.slug,
-            icon_path=p.icon_path,
-            title=p.title,
-            description=p.description,
-            level=p.level,
+    data = {}
+    for _p in Page.objects.all():
+        data[_p.slug] = dict(
+            pk=_p.pk,
+            slug=_p.slug,
+            icon_path=_p.icon_path,
+            title=_p.title,
+            description=_p.description,
+            level=_p.level,
         )
 
-    return dict(pages=pages)
+    return dict(pages=data)
 
 
 def active_page(request):
@@ -85,10 +85,10 @@ def active_page(request):
         return {}
 
     try:
-        active_page = Page.objects.get(slug=active_page_slug)
+        active_page_obj = Page.objects.get(slug=active_page_slug)
     except Page.DoesNotExist:
         return {}
 
     return dict(
-        active_page=active_page,
+        active_page=active_page_obj,
     )

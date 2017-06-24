@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=no-self-use
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from . import models
+
 from zoho.models import Page
+
+from . import models
 
 
 class StorePageInline(admin.TabularInline):

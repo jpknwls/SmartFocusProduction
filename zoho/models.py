@@ -135,7 +135,7 @@ class Page(models.Model):
             content_field_errors.append(
                 "Template syntax error. {err} "
                 "(Please refer to Django template syntax documentation.) "
-                .format(path=self.iframe_urls, err=unicode(exc)))
+                .format(err=unicode(exc)))
         else:
             valid_template = True
 
@@ -146,10 +146,10 @@ class Page(models.Model):
             for url in iframe_urls:
                 try:
                     validators.URLValidator()(url)
-                except exceptions.ValidationError, e:
+                except exceptions.ValidationError, err:
                     content_field_errors.append("{0}: {1}".format(
                         url,
-                        ', '.join(e.messages)))
+                        ', '.join(err.messages)))
 
             self.iframe_urls = '\n'.join(iframe_urls)
 
