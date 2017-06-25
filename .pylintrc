@@ -3,7 +3,7 @@ good-names=idx,_
 const-rgx=urlpatterns|log|.*Formset$|(([A-Z_][A-Z0-9_]*)|(__.*__))$
 
 [TYPECHECK]
-ignored-modules=django
+ignored-modules=django,rules
 
 [LOGGING]
 logging-modules=logging,log

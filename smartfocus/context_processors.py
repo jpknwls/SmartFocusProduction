@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from zoho.models import Page
-
 
 DROPDOWNS = {
     'records': [
@@ -50,45 +48,3 @@ def active_dropdown(request):
         )
     except IndexError:
         return {}
-
-
-def pages(request):
-    """
-    Added context variables: ``pages``, contains a structure like
-    {page_identifier: page, page_identifier_2: page2, ...}.
-    """
-    if not request.user.is_authenticated():
-        return {}
-
-    data = {}
-    for _p in Page.objects.all():
-        data[_p.slug] = dict(
-            pk=_p.pk,
-            slug=_p.slug,
-            icon_path=_p.icon_path,
-            title=_p.title,
-            description=_p.description,
-            level=_p.level,
-        )
-
-    return dict(pages=data)
-
-
-def active_page(request):
-    """
-    Returns context with active page, if any, based on URL parameters.
-    Added context variables: ``active_page`` pointing to Page object.
-    """
-    active_page_slug = request.resolver_match.kwargs.get('page_slug')
-
-    if not active_page_slug:
-        return {}
-
-    try:
-        active_page_obj = Page.objects.get(slug=active_page_slug)
-    except Page.DoesNotExist:
-        return {}
-
-    return dict(
-        active_page=active_page_obj,
-    )

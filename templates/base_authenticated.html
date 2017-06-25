@@ -50,6 +50,15 @@ to logged-in users should inherit from this template
             vertical-align: middle;
         }
 
+        .disabled-nav-item {
+            filter: grayscale(100%) opacity(50%);
+            -webkit-filter: grayscale(100%) opacity(50%);
+            cursor: default;
+        }
+        .disabled-nav-item a {
+            cursor: default;
+        }
+
 
         /* Site-wide footer */
         body > footer {

@@ -20,6 +20,7 @@
 
 <!-- Records dropdown -->
 
+{% if pages.patientrecords or pages.examrecords or pages.salesrecords %}
 <li class="dropdown {% if active_dropdown == "records" %}active{% endif %}">
 
     <a href="javascript: void 0;" class="dropdown-toggle"
@@ -35,10 +36,12 @@
     </ul>
 
 </li>
+{% endif %}
 
 
 <!-- Stock dropdown -->
 
+{% if pages.frameinventory or pages.lensinventory or pages.salesrecords or pages.newinventory or pages.products or pages.newproduct or pages.inventoryreviewform or pages.discrepancyrecords %}
 <li class="dropdown {% if active_dropdown == "stock" %}active{% endif %}">
 
     <a href="javascript: void 0;" class="dropdown-toggle"
@@ -52,22 +55,29 @@
         {% include "_top_nav_page_link.html" with page=pages.lensinventory %}
         {% include "_top_nav_page_link.html" with page=pages.salesrecords %}
 
+        {% if pages.newinventory %}
         <li role="separator" class="divider"></li>
 
         {% include "_top_nav_page_link.html" with page=pages.newinventory %}
+        {% endif %}
 
+        {% if pages.products or pages.newproduct %}
         <li role="separator" class="divider"></li>
 
         {% include "_top_nav_page_link.html" with page=pages.products %}
         {% include "_top_nav_page_link.html" with page=pages.newproduct %}
+        {% endif %}
 
+        {% if pages.inventoryreviewform or pages.discrepancyrecords %}
         <li role="separator" class="divider"></li>
 
         {% include "_top_nav_page_link.html" with page=pages.inventoryreviewform %}
         {% include "_top_nav_page_link.html" with page=pages.discrepancyrecords %}
+        {% endif %}
     </ul>
 
 </li>
+{% endif %}
 
 
 <!-- User & support dropdown -->

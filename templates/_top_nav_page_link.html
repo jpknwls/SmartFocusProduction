@@ -4,6 +4,7 @@ Expected context:
 {{ page }}
 {{ active_store }}
 {{ active_page }}
+{{ visible_pages }}
 {% endcomment %}
 
 {% load static %}
@@ -13,12 +14,17 @@ Expected context:
     {# Page configured #}
 
     <li class="
+        {% if not page.slug in visible_pages %}disabled-nav-item{% endif %}
         {% if active_page.slug == page.slug %}active{% endif %}
         "><a href="
-            {% if page.level == "STORE_LEVEL" %}
-                {% url "store_page" active_store.id page.slug %}
+            {% if page.slug in visible_pages %}
+                {% if page.level == "STORE_LEVEL" %}
+                    {% url "store_page" active_store.id page.slug %}
+                {% else %}
+                    {% url "page" page.slug %}
+                {% endif %}
             {% else %}
-                {% url "page" page.slug %}
+                javascript: void 0;
             {% endif %}
             ">
             <img src="{% static page.icon_path %}">

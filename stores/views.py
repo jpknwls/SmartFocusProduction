@@ -3,45 +3,46 @@ from __future__ import unicode_literals
 
 import logging
 
-from django import http
+from django.core import exceptions
+
 from . import models
 
 
 log = logging.getLogger('django.stores.views')
 
 
-def require_store_manager(view_func):
+def require_store_association(view_func):
     """
-    Provides to decorateed view access to user’s managed stores
+    Provides to decorateed view access to user’s associated stores
     and currently active store.
 
-    If user is not a manager on any stores, returns an HTTP Forbidden
+    If user is not associated with any stores, returns an HTTP Forbidden
     response.
 
-    Requires user to be logged in (use after ``login_required`` decorator).
+    Use after ``login_required`` decorator to ensure user is logged in.
 
-    Sets following keyword arguments for the view:
+    Passes the following keyword arguments to the view:
 
-    - ``managed_stores``: a list of managed stores
-    - ``active_store``:  store or first store
+    - ``associated_stores``: iterable of associated stores
+    - ``active_store``:  chosen store or first associated store
     """
 
     def wrapper(request, *args, **kwargs):
-        managed_stores = (
-            models.get_managed_stores(request.user).order_by('name'))
+        associated_stores = (
+            models.get_associated_stores(request.user).order_by('name'))
 
-        if len(managed_stores) < 1:
-            log.warning("User not a manager: %s", request.user.username)
-            return http.HttpResponseForbidden("User not a manager")
+        if len(associated_stores) < 1:
+            log.warning("No associated stores with UID %s", request.user.username)
+            raise exceptions.PermissionDenied()
 
         active_store = (
-            _get_selected_store(request) or
-            _get_last_selected_store(request) or
-            managed_stores[0])
+            _get_selected_store(request, associated_stores) or
+            _get_last_selected_store(request, associated_stores) or
+            associated_stores[0])
 
         _set_last_selected_store(request, active_store)
 
-        kwargs['managed_stores'] = managed_stores
+        kwargs['associated_stores'] = associated_stores
         kwargs['active_store'] = active_store
 
         return view_func(request, *args, **kwargs)
@@ -52,9 +53,10 @@ def require_store_manager(view_func):
 LAST_VIEWED_STORE_ID_SESSION_KEY = 'last_viewed_store_id'
 
 
-def _get_selected_store(request):
+def _get_selected_store(request, associated_stores):
     """
-    Get currently viewed store.
+    Get currently viewed store among associated stores.
+
     Returns :class:`stores.models.Store` instance or None.
 
     Uses named argument in resolved URL pattern.
@@ -69,12 +71,13 @@ def _get_selected_store(request):
     except models.Store.DoesNotExist:
         return None
     else:
-        return store if models.is_manager(request.user, store) else None
+        return store if store in associated_stores else None
 
 
-def _get_last_selected_store(request):
+def _get_last_selected_store(request, associated_stores):
     """
-    Get latest selected store.
+    Get latest selected store among given associated stores.
+
     Returns :class:`stores.models.Store` instance or None.
 
     Checkes user’s session for store ID.
@@ -89,7 +92,7 @@ def _get_last_selected_store(request):
     except models.Store.DoesNotExist:
         return None
     else:
-        return store if models.is_manager(request.user, store) else None
+        return store if store in associated_stores else None
 
 
 def _set_last_selected_store(request, store):

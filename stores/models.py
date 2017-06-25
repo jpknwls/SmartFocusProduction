@@ -7,19 +7,30 @@ from django.core.exceptions import ValidationError
 from django.core import validators
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 
 
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username='deleted_user')[0]
 
 
+def get_sentinel_group():
+    return Group.objects.get_or_create(name='deleted_group')[0]
+
+
+def get_store_managers_group():
+    return Group.objects.get_or_create(name='store managers')[0]
+
+
 class Region(models.Model):
     manager = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        related_name='managed_regions',
         on_delete=models.SET(get_sentinel_user),
         help_text=
-            "Selected user will manage all stores belonging "
-            "to this region.")
+            "Designates one user as region manager "
+            "having access to all pages of all stores "
+            "in the region.")
 
     name = models.CharField(max_length=255)
 
@@ -34,14 +45,27 @@ class Store(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.SET(get_sentinel_user),
         help_text=
-            "Selected user will manage this store. "
-            "Note that manager assigned to store’s region will "
-            "have access as well.")
+            "Designates one user as store manager "
+            "having access to all store pages. ")
 
-    name = models.CharField(max_length=255)
+    name = models.CharField("localized store name", max_length=255)
 
     def __unicode__(self):
         return self.name
+
+
+class StoreAssociate(models.Model):
+    store = models.ForeignKey(
+        'stores.Store',
+        related_name='associates')
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='associated_stores',
+        on_delete=models.SET(get_sentinel_user))
+
+    def __unicode__(self):
+        return "{0.user} at {0.store}".format(self)
 
 
 class StorePage(models.Model):
@@ -91,22 +115,6 @@ class StorePage(models.Model):
             raise ValidationError({'iframe_urls': errors})
 
 
-def get_managed_stores(user):
-    """
-    Returns a QuerySet of ``Store`` instances
-    according to user’s management role.
-    """
-    if user.is_staff or user.is_superuser:
-        return Store.objects.all()
-
-    return Store.objects.filter(Q(region__manager=user) | Q(manager=user))
-
-
-def is_manager(user, store):
-    """Returns ``True`` if ``store`` is managed by ``user``."""
-
-    return any([
-        store.manager == user,
-        store.region.manager == user,
-        user.is_superuser,
-    ])
+def get_associated_stores(user):
+    return Store.objects.filter(
+        Q(region__manager=user) | Q(manager=user) | Q(associates__user=user))

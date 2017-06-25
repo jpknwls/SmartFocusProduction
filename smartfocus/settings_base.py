@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rules.apps.AutodiscoverRulesConfig',
+
     'stores',
     'zoho',
 ]
@@ -49,6 +51,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'rules.permissions.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 ROOT_URLCONF = 'smartfocus.urls'
 LOGIN_URL = 'login'
@@ -69,8 +76,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'smartfocus.context_processors.active_dropdown',
-                'smartfocus.context_processors.active_page',
-                'smartfocus.context_processors.pages',
             ],
         },
     },

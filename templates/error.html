@@ -1,0 +1,24 @@
+{% extends "login.html" %}
+
+{% block title %}
+Error
+{% endblock %}
+
+{% block body %}
+<div class="login">
+    <div class="login-screen">
+        <h2>{% block error_title %}Error{% endblock %}</h2>
+        <p>
+        Whoops.
+        {% block error_description %}{% endblock %}
+        <p>
+        Our team has been notified and we’ll try to fix this.
+        {% block error_actions %}
+        <p>
+        <a href="javascript: history.back()">Go back</a>
+        or
+        <a href="/">Go to the main page</a>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

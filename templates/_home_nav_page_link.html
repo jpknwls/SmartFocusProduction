@@ -3,6 +3,7 @@ Link block in home page navigation.
 Expected context:
 {{ page }}
 {{ active_store }}
+{{ visible_pages }}
 {% endcomment %}
 
 {% load static %}
@@ -11,12 +12,16 @@ Expected context:
 
     {# Page configured #}
 
-    <li>
+    <li class="{% if not page.slug in visible_pages %}disabled-nav-item{% endif %}">
         <a href="
-            {% if page.level == "STORE_LEVEL" %}
-                {% url "store_page" active_store.id page.slug %}
+            {% if page.slug in visible_pages %} 
+                {% if page.level == "STORE_LEVEL" %}
+                    {% url "store_page" active_store.id page.slug %}
+                {% else %}
+                    {% url "page" page.slug %}
+                {% endif %}
             {% else %}
-                {% url "page" page.slug %}
+                javascript: void 0;
             {% endif %}
             ">
             <img src="{% static page.icon_path %}">

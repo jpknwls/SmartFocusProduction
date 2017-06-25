@@ -62,8 +62,28 @@ class Page(models.Model):
             "Instead, assign contents in admin sections "
             "corresponding to individual stores.")
 
+    # ACCESS CONTROL
+
+    is_restricted = models.BooleanField(
+        "enable access restriction",
+        default=False,
+        help_text=
+            "Designates that the page should only be accessible by "
+            "select user groups.")
+
+    groups_visible_to = models.ManyToManyField(
+        'auth.Group',
+        related_name='pages_visible',
+        verbose_name="groups",
+        blank=True,
+        help_text=
+            "Designates which groups a user must belong to "
+            "in order to access this page. "
+            "(Has no effect on managers. "
+            "Has no effect at all if access restriction is not enabled.)<br>")
+
     def __unicode__(self):
-        return self.title
+        return "{0.title} ({0.slug})".format(self)
 
     @property
     def icon_path(self):
@@ -158,3 +178,9 @@ class Page(models.Model):
                 exceptions.NON_FIELD_ERRORS: general_errors,
                 'iframe_urls': content_field_errors,
             })
+
+
+def get_visible_pages(user):
+    return Page.objects.filter(
+        models.Q(is_restricted=False) |
+        models.Q(groups_visible_to__user=user))
