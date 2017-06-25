@@ -116,5 +116,8 @@ class StorePage(models.Model):
 
 
 def get_associated_stores(user):
+    if user.is_staff or user.is_superuser:
+        return Store.objects.all()
+
     return Store.objects.filter(
         Q(region__manager=user) | Q(manager=user) | Q(associates__user=user))

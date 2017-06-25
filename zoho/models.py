@@ -181,6 +181,9 @@ class Page(models.Model):
 
 
 def get_visible_pages(user):
+    if user.is_staff or user.is_superuser:
+        return Page.objects.all()
+
     return Page.objects.filter(
         models.Q(is_restricted=False) |
         models.Q(groups_visible_to__user=user))
