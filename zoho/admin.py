@@ -40,7 +40,21 @@ class PageForm(forms.ModelForm):
 class PageAdmin(admin.ModelAdmin):
     form = PageForm
 
-    list_display = ('slug', 'title', 'level', 'has_all_stores_configured', )
+    list_display = (
+        'slug',
+        'title',
+        'level',
+        'is_restricted',
+        'has_all_stores_configured',
+    )
+
+    list_editable = (
+        'is_restricted',
+    )
+
+    list_filter = (
+        'level',
+    )
 
     fieldsets = (
         (None, {'fields': (('level', 'slug'), )}),

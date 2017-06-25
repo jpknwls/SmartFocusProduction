@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as StockUserAdmin
 
-from zoho.models import Page
+from zoho import models as zoho
 
 from . import models
 
@@ -48,7 +48,7 @@ class StoreAdmin(admin.ModelAdmin):
     ]
 
     def has_all_pages_configured(self, obj):
-        expected_page_num = len(Page.objects.filter(level='STORE_LEVEL'))
+        expected_page_num = len(zoho.Page.objects.filter(level='STORE_LEVEL'))
         return len(obj.store_pages.all()) == expected_page_num
     has_all_pages_configured.short_description = "Has all pages configured?"
     has_all_pages_configured.boolean = True
@@ -66,6 +66,7 @@ admin.site.register(models.Store, StoreAdmin)
 
 def _get_fieldsets():
     _fs = []
+
     for fieldset in StockUserAdmin.fieldsets:
         if 'groups' not in fieldset[1]['fields']:
             _fs.append(fieldset)
@@ -75,6 +76,11 @@ def _get_fieldsets():
                 if _f not in ['user_permissions']
             ])
             _fs.append(fieldset)
+
+    _fs.append(
+        ("Access Setup", {'fields': ('has_access_configured', )})
+    )
+
     return tuple(_fs)
 
 class UserStoreAssociateInline(admin.TabularInline):
@@ -85,9 +91,22 @@ class UserStoreAssociateInline(admin.TabularInline):
 class UserAdmin(StockUserAdmin):
     fieldsets = _get_fieldsets()
 
+    list_display = StockUserAdmin.list_display + ('has_access_configured', )
+
+    readonly_fields = ['has_access_configured']
+
     inlines = [
         UserStoreAssociateInline,
     ]
+
+    def has_access_configured(self, obj):
+        if any([
+            len(models.get_associated_stores(obj)) < 1,
+            len(zoho.get_visible_pages(obj)) < 1]):
+            return False
+        return True
+    has_access_configured.short_description = "Has access configured?"
+    has_access_configured.boolean = True
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

@@ -30,6 +30,7 @@ class Page(models.Model):
             "Whether this page’s contents will be different for each store.")
 
     title = models.CharField(
+        "localized title",
         max_length=255,
         unique=True,
         help_text=
@@ -65,7 +66,7 @@ class Page(models.Model):
     # ACCESS CONTROL
 
     is_restricted = models.BooleanField(
-        "enable access restriction",
+        "restricted",
         default=False,
         help_text=
             "Designates that the page should only be accessible by "
