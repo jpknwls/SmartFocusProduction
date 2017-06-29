@@ -1,5 +1,30 @@
----
+--
 - hosts: all
   roles: [smartfocus]
   vars_files:
     - "{{ inventory_dir }}/vars.yaml"
+  tasks:
+
+- name: enable default nginx vhost
+      become: true
+      file:
+        src=/etc/nginx/sites-available/default
+        dest=/etc/nginx/sites-enabled/default
+        state=link
+      
+      tags: ssl
+
+    - name: start nginx
+      become: true
+      service: name=nginx state=restarted
+      
+      tags: ssl
+
+    - name: set up ssl cert
+      become: true
+      command: certbot certonly --non-interactive --agree-tos --email jkn0wles@stanford.edu  --webroot --webroot-path /var/www/jiaodianeyes.com -d www.jiaodianeyes.com
+      
+      tags: ssl
+
+
+
