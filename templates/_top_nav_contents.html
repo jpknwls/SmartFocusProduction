@@ -17,10 +17,8 @@
 {% include "_top_nav_page_link.html" with page=pages.sale %}
 {% include "_top_nav_page_link.html" with page=pages.salescomparison %}
 
-
 <!-- Records dropdown -->
 
-{% if pages.patientrecords or pages.examrecords or pages.salesrecords %}
 <li class="dropdown {% if active_dropdown == "records" %}active{% endif %}">
 
     <a href="javascript: void 0;" class="dropdown-toggle"
@@ -30,18 +28,14 @@
     </a>
 
     <ul class="dropdown-menu">
-        {% include "_top_nav_page_link.html" with page=pages.patientrecords %}
-        {% include "_top_nav_page_link.html" with page=pages.examrecords %}
-        {% include "_top_nav_page_link.html" with page=pages.salesrecords %}
+     {% include "_top_nav_page_link.html" with page=pages.patientrecords %} 
     </ul>
 
 </li>
-{% endif %}
 
 
 <!-- Stock dropdown -->
 
-{% if pages.frameinventory or pages.lensinventory or pages.salesrecords or pages.newinventory or pages.products or pages.newproduct or pages.inventoryreviewform or pages.discrepancyrecords %}
 <li class="dropdown {% if active_dropdown == "stock" %}active{% endif %}">
 
     <a href="javascript: void 0;" class="dropdown-toggle"
@@ -51,33 +45,26 @@
     </a>
 
     <ul class="dropdown-menu">
-        {% include "_top_nav_page_link.html" with page=pages.frameinventory %}
+       <!-- {% include "_top_nav_page_link.html" with page=pages.frameinventory %} -->
         {% include "_top_nav_page_link.html" with page=pages.lensinventory %}
-        {% include "_top_nav_page_link.html" with page=pages.salesrecords %}
+  <!--      {% include "_top_nav_page_link.html" with page=pages.salesrecords %} -->
 
-        {% if pages.newinventory %}
         <li role="separator" class="divider"></li>
 
         {% include "_top_nav_page_link.html" with page=pages.newinventory %}
-        {% endif %}
 
-        {% if pages.products or pages.newproduct %}
         <li role="separator" class="divider"></li>
 
         {% include "_top_nav_page_link.html" with page=pages.products %}
         {% include "_top_nav_page_link.html" with page=pages.newproduct %}
-        {% endif %}
 
-        {% if pages.inventoryreviewform or pages.discrepancyrecords %}
         <li role="separator" class="divider"></li>
 
         {% include "_top_nav_page_link.html" with page=pages.inventoryreviewform %}
         {% include "_top_nav_page_link.html" with page=pages.discrepancyrecords %}
-        {% endif %}
     </ul>
 
 </li>
-{% endif %}
 
 
 <!-- User & support dropdown -->
@@ -90,14 +77,14 @@
         欢迎<span class="caret"></span>
     </a>
 
-    <ul class="dropdown-menu dropdown-menu-right">
+    <ul  class="dropdown-menu dropdown-menu-right">
         <li class="dropdown-header">你好 {{ request.user.username }}</li>
 
         {% include "_top_nav_page_link.html" with page=pages.documents %}
 
         <li role="separator" class="divider"></li>
 
-        {% if request.user.is_staff %}
+        {% if request.user.is_superuser %}
         <li>
             <a href="{% url "admin:index" %}">
                 <span class="glyphicon glyphicon-cog"></span>
@@ -115,3 +102,4 @@
     </ul>
 
 </li>
+
