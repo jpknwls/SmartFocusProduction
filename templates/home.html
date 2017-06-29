@@ -6,6 +6,7 @@
     <nav class="home-nav home-nav--bordered">
         <ul>
             {% include "_home_nav_page_link.html" with num=1 page=pages.patient %}
+            {% include "_home_page_instructions.html" with num=1 %}
             {% include "_home_nav_page_link.html" with num=2 page=pages.exam %}
             {% include "_home_nav_page_link.html" with num=3 page=pages.sale %}
             {% include "_home_nav_page_link.html" with num=4 page=pages.salescomparison %}
@@ -242,6 +243,7 @@
         .home-nav p.desc {
             margin: 0;
             padding: 0;
+            color: gray;
         }
         li {
             list-style: none;

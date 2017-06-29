@@ -9,7 +9,15 @@
     - name: 'install python2'
       raw: sudo apt-get -y install python-simplejson
 
-  # tasks:
+  tasks:
+    - name: upload app code
+      synchronize:
+        src: "../.."
+        dest: "{{ project_home }}"
+      when: push_mode == "rsync"
+      tags: webapp, app-code, static
+      notify:
+        - restart gunicorn
   #   - name: upload django settings
   #     template:
   #       src=templates/django_settings.py.j2
