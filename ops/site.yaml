@@ -10,14 +10,14 @@
       raw: sudo apt-get -y install python-simplejson
 
   tasks:
-    - name: upload app code
-      synchronize:
-        src: "../.."
-        dest: "{{ project_home }}"
-      when: push_mode == "rsync"
-      tags: webapp, app-code, static
-      notify:
-        - restart gunicorn
+    # - name: upload app code
+    #   synchronize:
+    #     src: "../.."
+    #     dest: "{{ project_home }}"
+    #   when: push_mode == "rsync"
+    #   tags: webapp, app-code, static
+    #   notify:
+    #     - restart gunicorn
   #   - name: upload django settings
   #     template:
   #       src=templates/django_settings.py.j2
@@ -67,24 +67,24 @@
   #     tags: gunicorn
  
 
-  - name: enable default nginx vhost
-    become: true
-    file:
-      src=/etc/nginx/sites-available/default
-      dest=/etc/nginx/sites-enabled/default
-      state=link
-    
-    tags: ssl
+      # - name: enable default nginx vhost
+      #   become: true
+      #   file:
+      #     src=/etc/nginx/sites-available/smartfocus-site
+      #     dest=/etc/nginx/sites-enabled/smartfocus-site
+      #     state=link
+        
+      #   tags: ssl
 
-  - name: start nginx
-    become: true
-    service: name=nginx state=restarted
-    
-    tags: ssl
+      # - name: start nginx
+      #   become: true
+      #   service: name=nginx state=restarted
+        
+      #   tags: ssl
 
-  - name: set up ssl cert
-    become: true
-    command: certbot certonly --non-interactive --agree-tos --email jkn0wles@stanford.edu  --webroot --webroot-path /var/www/jiaodianeyes.com -d jiaodianeyes.com
-    
-    tags: ssl
+      # - name: set up ssl cert
+      #   become: true
+      #   command: certbot certonly --non-interactive --agree-tos --email jkn0wles@stanford.edu  --webroot -w /usr/share/nginx/html -d www.jiaodianeyes.com
+        
+      #   tags: ssl
 
