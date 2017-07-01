@@ -67,6 +67,7 @@
   #     tags: gunicorn
  
 
+<<<<<<< HEAD
       - name: enable default nginx vhost
         become: true
         file:
@@ -87,4 +88,26 @@
         command: certbot certonly --non-interactive --agree-tos --email jkn0wles@stanford.edu  --webroot -w /usr/share/nginx/jiaodianeyes -d www.jiaodianeyes.com
         
         tags: ssl
+=======
+      # - name: enable default nginx vhost
+      #   become: true
+      #   file:
+      #     src=/etc/nginx/sites-available/smartfocus-site
+      #     dest=/etc/nginx/sites-enabled/smartfocus-site
+      #     state=link
+        
+      #   tags: ssl
+
+      # - name: start nginx
+      #   become: true
+      #   service: name=nginx state=restarted
+        
+      #   tags: ssl
+
+      # - name: set up ssl cert
+      #   become: true
+      #   command: certbot certonly --non-interactive --agree-tos --email jkn0wles@stanford.edu  --webroot -w /usr/share/nginx/html -d www.jiaodianeyes.com
+        
+      #   tags: ssl
+>>>>>>> 613683a03d6bb086eb112f7515bab7596ff704f6
 
