@@ -51,7 +51,7 @@ dependencies:
     frontend_config_name: smartfocus-site
     frontend_domain_name: "{{ domain_name }}"
     frontend_upstream:
-      name: "{{ domain_name|to_uuid }}"
+      name: "smartfocus"
       socket_path: "{{ gunicorn_socket_path }}"
     frontend_ssl:
       enabled: "{{ ssl }}"
@@ -65,4 +65,4 @@ dependencies:
       - url_path: "{{ static_url }}/"
         filesystem_alias: "{{ static_root }}/"
     frontend_50x_html_path: "{{ repo_root }}/static_pages/50x.html"
-    frontend_nginx_default_root: /var/www/html
+    frontend_nginx_default_root: /var/www/jiaodianeyes.com

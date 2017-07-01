@@ -102,6 +102,7 @@ def page(request,
         'iframe_page.html',
     ]
 
+
     return render(request, templates_to_try, dict(
         pages=_pages_by_slug(Page.objects.all()),
         visible_pages=_pages_by_slug(visible_pages),
