@@ -1,0 +1,264 @@
+{% extends "base_authenticated.html" %}
+
+{% load static %}
+
+{% block main %}
+    <nav class="home-nav home-nav--bordered">
+        <ul>
+            {% include "_home_nav_page_link.html" with num=1 page=pages.patient %}
+            {% include "_home_page_instructions.html" with num=1 %}
+            {% include "_home_nav_page_link.html" with num=2 page=pages.exam %}
+            {% include "_home_nav_page_link.html" with num=3 page=pages.sale %}
+            {% include "_home_nav_page_link.html" with num=4 page=pages.salescomparison %}
+
+            <!-- {% include "_home_nav_page_link.html" with num=5 page=pages.patientrecords %} -->
+           <!-- {% include "_home_nav_page_link.html" with num=6 page=pages.tripleform %} -->
+             <!--  {% include "_home_nav_page_link.html" with num=7 page=pages.salesrecords %} -->
+        </ul>
+    </nav>
+
+    <nav class="home-nav">
+        <ul>
+            {% include "_home_nav_page_link.html" with num=5 page=pages.newproduct %}
+            {% include "_home_nav_page_link.html" with num=6 page=pages.newinventory %}
+            {% include "_home_nav_page_link.html" with num=7 page=pages.inventoryreviewform %}
+            {% include "_home_nav_page_link.html" with num=8 page=pages.discrepancyrecords %}
+
+            {% include "_home_nav_page_link.html" with num=9 page=pages.products %}
+             <!-- {% include "_home_nav_page_link.html" with num=13 page=pages.frameinventory %} -->
+            {% include "_home_nav_page_link.html" with num=10 page=pages.lensinventory %}
+        {% include "_home_nav_page_link.html" with num=11 page=pages.documents %}
+              <a href="{% url "logout" %}">
+                  <img src="{% static "images/logout.png" %}">
+                  <h2 class="title">12 退出</h2>
+        </a>
+        </ul>
+    </nav>
+
+
+<div class="container">
+    <br />
+    <br />
+    <br />
+
+  
+    <div class="panel-group" id="accordion">
+        <div class="faqHeader">总体介绍</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+       www.jiaodianeyes.com这个网站主要用于录入和查看库存数据，验光数据，病人数据和销售数
+
+据。员工通过数据录入表格进行数据录入，并以表格和图表（称为“报表”）的形式呈现和总结
+
+。我们可以通过使用窗口右上角的图标进行数据搜索和筛选。
+                </div>
+            </div>
+        </div>
+
+         <div class="faqHeader">  病人数据</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+           
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                 病人的表格记录所有患者的详细信，在填写验光表格或销售表格之前，必须要提交顾客的个人
+
+相关信息。 患者的录入表格在“患者”的菜单栏里面，患者的报告数据在“记录”的菜单栏里面。
+        
+                </div>
+            </div>
+        </div>
+    
+     <div class="faqHeader">验光数据</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+             
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                   
+       验光的录入表格记录病人相关的眼部健康检查和验光信息。 验光数据的录入表格包含在“验光”菜单栏中，验
+
+光的报告数据在“记录”的菜单栏中。
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="faqHeader"> 销售</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+             
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                 销售录入表格记录销售数据。每当销售表单填写完成时，库存记录将自动更新以反映销售情况。在进行销售
+
+数据录入之前，必须保证病人的数据都已经完成录入。销售数据在“仪表板”菜单下的图标和总结进行统计。
+
+销售录入表格在“销售”菜单里面，销售报告在“记录”菜单里面。不用用销售表单录入月底销售总数。
+  
+                </div>
+            </div>
+        </div>
+   
+     <div class="faqHeader">产品种类</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                   产品的记录表格和相关的产品种类表格记录了我们所有视光中心不同类型的镜片和镜架情况。 为了使电子库
+
+存发挥作用，我们所有的产品记录应保持持续性更新。当每一个视光中心购买一种新的视光中心当前所没有
+
+的镜片或者镜架产品时，应该及时将新购买的产品添加到“产品种类”目录，确保所有视光中心都能够选择库
+
+存和销售表格中的产品。 我们能够同时在“库存”菜单中找到所有的产品种类及新添加的产品种类。
+
+            
+                </div>
+            </div>
+        </div>
+    
+     <div class="faqHeader"> 库存</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+           
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+               库存能够反映每一个视光中心不同产品库存量持续性的记录。每个库存表单包括所能够选取产品的库存条目
+
+、这些这些产品库存储存在哪一个视光中心及总的储存量。每当销售表格录入完成时，销售表单中显示的库
+
+存条目的库存量会自动更新并反映销售情况。库存菜单中包含录入表格和报告两个子菜单。现在，每个验光
+
+中心的库存数据需要更新。
+        
+                </div>
+            </div>
+        </div>
+  
+    
+    
+      <div class="faqHeader">  库存盘点</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+               库存盘点和审查记录用于跟踪库存条目和实际库存条目不一致的情况。 由于库存表格会在销售表格填写完整
+
+后自动更新，如果数据网站上的库存量高于视光中心货架上的库存数量时，则表明在进行数据录入时出现错
+
+误或者数据丢失。 为了跟踪了解到那些缺失的库存是什么，什么时候缺失的，员工应定期填写库存盘点表。
+
+库存盘点表单中的“添加新”按钮具有添加新子表单的功能。 员工应该填写自己视光中心每个库存条目的一个
+
+详细的库存表单，然后提交库存清单。对于电子表格中的库存数量和实际库存数量之间的差异，将在审查表
+
+格上加上记录日期、视光中心名称、库存条目和缺少的数量。从而保证电子版的库存条目更新后能够以反映
+
+数据录入后的库存数量。 库存表格和库存报告都包含在库存菜单里面。
+
+         </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_head %}
+    {{ block.super }}
+
+
+<style>
+    .faqHeader {
+        font-size: 27px;
+        margin: 20px;
+    }
+    .panel-heading [data-toggle="collapse"]:after {
+        font-family: 'Glyphicons Halflings';
+        float: right;
+        color: #F58723;
+        font-size: 18px;
+        line-height: 22px;
+        /* rotate "play" icon from > (right arrow) to down arrow */
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
+    .panel-heading [data-toggle="collapse"].collapsed:after {
+        /* rotate "play" icon from > (right arrow) to ^ (up arrow) */
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+        color: #454444;
+}
+        body > main {
+            justify-content: stretch;
+            align-items: stretch;
+        }
+        .home-nav {
+            padding: 1.5em;
+            margin: 1em;
+        }
+        .home-nav--bordered {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .home-nav ul {
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template: "link link link link";
+            grid-auto-rows: min-content;
+            grid-auto-columns: 25%;
+            grid-row-gap: 2em;
+        }
+        .home-nav ul li {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .home-nav img,
+        .home-nav .glyphicon {
+            width: 50px;
+            height: 50px;
+        }
+        .home-nav a {
+            display: block;
+            text-align: center;
+        }
+        .home-nav a:link,
+        .home-nav a:visited,
+        .home-nav a:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+        .home-nav .title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .home-nav p.desc {
+            margin: 0;
+            padding: 0;
+            color: gray;
+        }
+        li {
+            list-style: none;
+        }
+    </style>
+{% endblock %}
