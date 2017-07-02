@@ -1,30 +1,113 @@
---
+---
 - hosts: all
+  become: yes
   roles: [smartfocus]
+  gather_facts: no
   vars_files:
     - "{{ inventory_dir }}/vars.yaml"
+  pre_tasks:
+    - name: 'install python2'
+      raw: sudo apt-get -y install python-simplejson
+
   tasks:
+    # - name: upload app code
+    #   synchronize:
+    #     src: "../.."
+    #     dest: "{{ project_home }}"
+    #   when: push_mode == "rsync"
+    #   tags: webapp, app-code, static
+    #   notify:
+    #     - restart gunicorn
+  #   - name: upload django settings
+  #     template:
+  #       src=templates/django_settings.py.j2
+  #       dest={{ project_home }}/src/smartfocus/settings.py
+  #     notify:
+  #       - restart gunicorn
+  #     tags: webapp, django-settings, app-code
 
-- name: enable default nginx vhost
-      become: true
-      file:
-        src=/etc/nginx/sites-available/default
-        dest=/etc/nginx/sites-enabled/default
-        state=link
-      
-      tags: ssl
+  #   - name: disable default nginx vhost
+  #     become: true
+  #     file: path=/etc/nginx/sites-enabled/default state=absent
+  #     notify:
+  #       - restart nginx
+  #     tags: nginx
 
-    - name: start nginx
-      become: true
-      service: name=nginx state=restarted
-      
-      tags: ssl
+  #   - name: configure nginx
+  #     become: true
+  #     template:
+  #       src=templates/nginx.conf.j2
+  #       dest=/etc/nginx/conf.d/nginx.conf
+  #     tags: nginx
 
-    - name: set up ssl cert
-      become: true
-      command: certbot certonly --non-interactive --agree-tos --email jkn0wles@stanford.edu  --webroot --webroot-path /var/www/jiaodianeyes.com -d www.jiaodianeyes.com
-      
-      tags: ssl
+  #   - name: create our nginx vhost
+  #     become: true
+  #     template:
+  #       src=templates/nginx_vhost.conf.j2
+  #       dest=/etc/nginx/sites-available/smartfocus-site
+  #     tags: nginx
 
+  #   - name: create dir for gunicorn's socket file
+  #     become: true
+  #     file: state=directory path=/var/run/gunicorn
+  #     tags: gunicorn
 
+  #   - name: install gunicorn
+  #     become: true
+  #     pip: name=gunicorn
+  #     tags: gunicorn
+
+  #   - name: configure gunicorn
+  #     become: true
+  #     template:
+  #       src=templates/gunicorn_app.py.j2
+  #       dest=/etc/gunicorn.d/smartfocus.conf
+  #     notify:
+  #       - restart gunicorn
+  #     tags: gunicorn
+ 
+
+<<<<<<< HEAD
+      - name: enable default nginx vhost
+        become: true
+        file:
+          src=/etc/nginx/sites-available/smartfocus-site
+          dest=/etc/nginx/sites-enabled/smartfocus-site
+          state=link
+        
+        tags: ssl
+
+      - name: start nginx
+        become: true
+        service: name=nginx state=restarted
+        
+        tags: ssl
+
+      - name: set up ssl cert
+        become: true
+        command: certbot certonly --non-interactive --agree-tos --email jkn0wles@stanford.edu  --webroot -w /usr/share/nginx/jiaodianeyes -d www.jiaodianeyes.com
+        
+        tags: ssl
+=======
+      # - name: enable default nginx vhost
+      #   become: true
+      #   file:
+      #     src=/etc/nginx/sites-available/smartfocus-site
+      #     dest=/etc/nginx/sites-enabled/smartfocus-site
+      #     state=link
+        
+      #   tags: ssl
+
+      # - name: start nginx
+      #   become: true
+      #   service: name=nginx state=restarted
+        
+      #   tags: ssl
+
+      # - name: set up ssl cert
+      #   become: true
+      #   command: certbot certonly --non-interactive --agree-tos --email jkn0wles@stanford.edu  --webroot -w /usr/share/nginx/html -d www.jiaodianeyes.com
+        
+      #   tags: ssl
+>>>>>>> 613683a03d6bb086eb112f7515bab7596ff704f6
 
