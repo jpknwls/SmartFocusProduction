@@ -1,0 +1,105 @@
+{% load static %}
+
+
+<!-- Branding -->
+
+<li class="logo {% if not active_page %}active{% endif %}">
+    <a href="{% url "home" %}">
+        <img src="{% static "images/jiaodianlogo.png" %}">
+    </a>
+</li>
+
+
+<!-- Top-level pages -->
+
+{% include "_top_nav_page_link.html" with page=pages.patient %}
+{% include "_top_nav_page_link.html" with page=pages.exam %}
+{% include "_top_nav_page_link.html" with page=pages.sale %}
+{% include "_top_nav_page_link.html" with page=pages.salescomparison %}
+
+<!-- Records dropdown -->
+
+<li class="dropdown {% if active_dropdown == "records" %}active{% endif %}">
+
+    <a href="javascript: void 0;" class="dropdown-toggle"
+        data-toggle="dropdown" role="button" aria-haspopup="true">
+        <img src="{% static "images/records.png" %}">
+        记录<span class="caret"></span>
+    </a>
+
+    <ul class="dropdown-menu">
+     {% include "_top_nav_page_link.html" with page=pages.patientrecords %} 
+    </ul>
+
+</li>
+
+
+<!-- Stock dropdown -->
+
+<li class="dropdown {% if active_dropdown == "stock" %}active{% endif %}">
+
+    <a href="javascript: void 0;" class="dropdown-toggle"
+        data-toggle="dropdown" role="button" aria-haspopup="true">
+        <img src="{% static "images/stock.png" %}">
+        库存<span class="caret"></span>
+    </a>
+
+    <ul class="dropdown-menu">
+       <!-- {% include "_top_nav_page_link.html" with page=pages.frameinventory %} -->
+        {% include "_top_nav_page_link.html" with page=pages.lensinventory %}
+  <!--      {% include "_top_nav_page_link.html" with page=pages.salesrecords %} -->
+
+        <li role="separator" class="divider"></li>
+
+        {% include "_top_nav_page_link.html" with page=pages.newinventory %}
+
+        <li role="separator" class="divider"></li>
+
+        {% include "_top_nav_page_link.html" with page=pages.products %}
+        {% include "_top_nav_page_link.html" with page=pages.newproduct %}
+
+        <li role="separator" class="divider"></li>
+
+        {% include "_top_nav_page_link.html" with page=pages.inventoryreviewform %}
+        {% include "_top_nav_page_link.html" with page=pages.discrepancyrecords %}
+    </ul>
+
+</li>
+
+
+<!-- User & support dropdown -->
+
+<li class="dropdown {% if active_dropdown == "welcome" %}active{% endif %}">
+
+    <a href="javascript: void 0;" class="dropdown-toggle"
+        data-toggle="dropdown" role="button" aria-haspopup="true">
+        <img src="{% static "images/support.png" %}">
+        欢迎<span class="caret"></span>
+    </a>
+
+    <ul  class="dropdown-menu dropdown-menu-right">
+        <li class="dropdown-header">你好 {{ request.user.username }}</li>
+
+        {% include "_top_nav_page_link.html" with page=pages.documents %}
+
+        <li role="separator" class="divider"></li>
+
+        {% if request.user.is_superuser %}
+        <li>
+            <a href="{% url "admin:index" %}">
+                <span class="glyphicon glyphicon-cog"></span>
+                管理
+            </a>
+        </li>
+        {% endif %}
+
+        <li>
+            <a href="{% url "logout" %}">
+                <span class="glyphicon glyphicon-log-out"></span>
+                退出
+            </a>
+        </li>
+    </ul>
+
+</li>
+

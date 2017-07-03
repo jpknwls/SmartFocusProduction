@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+
+  config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 8000, host: 8000, host_ip: "127.0.0.1"
+
+  config.vm.box_check_update = false
+
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "../..", "/home/ubuntu/smartfocus-site", owner: "ubuntu", group: "ubuntu", create: true
+
+  # config.vm.provider "virtualbox" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+  #   vb.memory = "1024"
+  # end
+
+  # Note: Might better be initialized in the playbook
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo rm -rf /var/lib/apt/lists/*
+    apt-get clean
+    apt-get update
+    apt-get install -y python-dev
+  SHELL
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "site.yaml"
+    ansible.inventory_path = "inventories/local/hosts.ini"
+    ansible.raw_arguments = ['-vv']
+  end
+end

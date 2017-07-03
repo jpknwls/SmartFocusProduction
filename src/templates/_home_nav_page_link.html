@@ -1,0 +1,48 @@
+{% comment %}
+Link block in home page navigation.
+Expected context:
+{{ page }}
+{{ active_store }}
+{{ visible_pages }}
+{% endcomment %}
+
+{% load static %}
+
+{% if page.pk %}
+
+    {# Page configured #}
+
+    <li class="{% if not page.slug in visible_pages %}disabled-nav-item{% endif %}">
+        <a href="
+            {% if page.slug in visible_pages %} 
+                {% if page.level == "STORE_LEVEL" %}
+                    {% url "store_page" active_store.id page.slug %}
+                {% else %}
+                    {% url "page" page.slug %}
+                {% endif %}
+            {% else %}
+                javascript: void 0;
+            {% endif %}
+            ">
+            <img src="{% static page.icon_path %}">
+            <h2 class="title">{{ num }} {{ page.title }}</h2>
+            <p class="desc">{{ page.description }}</p>
+        </a>
+    </li>
+
+{% else %}
+
+    {# Page exists in navigation but not configured in DB #}
+    {# Show an error #}
+
+    <li class="disabled" title="Page not configured">
+        <a href="javascript: void 0;">
+            <span class="glyphicon glyphicon-exclamation-sign"
+                aria-hidden="true"></span>
+            <br>
+            <h2 class="title">{{ num }} 出错</h2>
+            <p class="desc">Page not configured</p>
+        </a>
+    </li>
+
+{% endif %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% comment %}
+Areas of the site supposed to display navigation available
+to logged-in users should inherit from this template
+{% endcomment %}
+
+{% block extra_head %}
+    {{ block.super }}
+
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/gradients.css" %}" rel="stylesheet">
+
+    <style>
+        body {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            display: flex;
+            flex-flow: column nowrap;
+
+            justify-content: stretch;
+            align-items: stretch;
+
+            padding: .5em;
+        }
+
+        body > main {
+            flex: 2;
+            display: flex;
+            flex-flow: column nowrap;
+
+            justify-content: stretch;
+            align-items: stretch;
+
+            /* Make it so that the <main> scrolls instead of the <body> */
+            overflow-y: auto;
+        }
+
+        /* Site-wide navigation */
+        body > header .nav .logo img {
+            width: 65px;
+            padding: 0;
+        }
+        body > header .nav img,
+        body > header .nav .glyphicon {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+        }
+
+        .disabled-nav-item {
+            filter: grayscale(100%) opacity(50%);
+            -webkit-filter: grayscale(100%) opacity(50%);
+            cursor: default;
+        }
+        .disabled-nav-item a {
+            cursor: default;
+        }
+
+
+        /* Site-wide footer */
+        body > footer {
+            text-align: center;
+            color: #aaa;
+            padding-top: 1em;
+        }
+        body > footer p {
+            margin: 0;
+            padding: 0;
+            font-size: 80%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <header>
+        <nav>
+            <ul class="nav nav-tabs nav-justified">
+                {% include "_top_nav_contents.html" %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; Copyright 2017 by 焦点视光</p>
+    </footer>
+
+{% endblock %}

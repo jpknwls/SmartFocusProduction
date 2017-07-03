@@ -1,0 +1,373 @@
+[
+{
+    "model": "zoho.page",
+    "pk": 1,
+    "fields": {
+        "level": "STORE_LEVEL",
+        "title": "\u955c\u67b6\u62a5\u8868",
+        "description": "\u663e\u793a\u5e93\u5b58\u955c\u67b6",
+        "slug": "frameinventory",
+        "iframe_urls": ""
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 2,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u60a3\u8005",
+        "description": "\u5f55\u5165\u75c5\u4eba\u8d44\u6599",
+        "slug": "patient",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/form-embed/patient_reg/nRRuVb4rDw2rBhDbQK0pYXTjSFBTeh1wfgw5x0fvTNvkbnaMYgDKmdTxEvXRYbe0C76Gq9PyfVX610e80EqjbemKgXn4xmw98rQN"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 3,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u9a8c\u5149",
+        "description": "\u5f55\u5165\u9a8c\u5149\u8d44\u6599",
+        "slug": "exam",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/form-embed/refraction/ajE4qQhCNNeEO0uQJquzXtCaBHpwFR15bCkOYZ1FNSNFv0HTPDjpHvVYTEN8dYfAsd7ftrp3NGm3fe3ZmnQBehgNP5dN1TxwajaC"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 4,
+    "fields": {
+        "level": "STORE_LEVEL",
+        "title": "\u955c\u7247\u62a5\u8868",
+        "description": "\u663e\u793a\u5e93\u5b58\u955c\u7247",
+        "slug": "lensinventory",
+        "iframe_urls": ""
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 5,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u9500\u552e",
+        "description": "\u5f55\u5165\u9500\u552e\u8d44\u6599",
+        "slug": "sale",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/form-embed/form3/6nFOgYnDYDzBpBJCWzmd9aYbB5tkVOHCev9Aj5194VSNTRdYTepbxqMFtq75uy145zFSg6Z8JRpQpHMabjAAbuRnR0bEQGGu8Ypx"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 6,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u4eea\u8868\u677f",
+        "description": "\u5404\u89c6\u5149\u4e2d\u5fc3\u3001\u65e5\u671f\u3001\u9500\u552e\u91cf\u6bd4\u8f83\u3001\u62a5\u8868",
+        "slug": "salescomparison",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/report-embed/Sales_comparison/t8O1TPbv0e7susu5aSgZHKO5m4b0yuEJHKZwF6sCKWMxU9TGaQHMfOeXP9wF3vNyfEv9fyphDaN9CxwqDxPygYy6AyrFf17sTEwJ\nhttps://creator.zohopublic.com/zoho_sam911/order-management/report-embed/salespermonth/K8GrCyz19K9uTBz6sE0bwnHSPzRatsypqm02OMmd72SpbpqS6dpeqDEEd64sfdORKk4rakGXuCXOuC5ORJj5SjNCJ6JRQ8T16GFw"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 7,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u75c5\u4eba\u8bb0\u5f55",
+        "description": "\u663e\u793a\u8fc7\u53bb\u7684\u75c5\u4eba\u8bb0\u5f55",
+        "slug": "patientrecords",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/form2_Report/rfCSM8DheQ1kWJbh9QFTZ05P1qK8DDKH9nX57bhDrqutHtYHzTsWCEFWDK3fyduROxthKB7mYU45jKm2B9hFqyX4ObAX3hdMH9O5"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 8,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u9a8c\u5149\u8bb0\u5f55",
+        "description": "\u663e\u793a\u8fc7\u53bb\u7684\u9a8c\u5149\u8bb0\u5f55",
+        "slug": "examrecords",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/form2_Report1/SSqr2Hgb5qD9F113RADZJ0HTWHgFsZdH1Fbgn0eedRbqMeQK0j4x84Q1ppXFtOyT37rADDUM0X58MEeSDD7kKKZ7yHjvzT7BGmB4"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 9,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u9500\u552e\u8bb0\u5f55",
+        "description": "\u663e\u793a\u8fc7\u53bb\u7684\u9500\u552e\u8bb0\u5f55",
+        "slug": "salesrecords",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/form3_Report/F5JT5gsj5q8zg8RzzSEsuyvn2xVWVH9ZCgXM9nFT9v96q6Ugs1CG5X25Y3057fU6KHYeggT4e3VMqD8SBVT5fua89ffn9GH8QvWh"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 10,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u65b0\u4ea7\u54c1",
+        "description": "\u5e93\u5b58\u4ee5\u524d\u6ca1\u6709\u7684\u4ea7\u54c1\uff0c\u9700\u8981\u5148\u5f55\u5165\u65b0\u4ea7\u54c1",
+        "slug": "newproduct",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/form-embed/frameproducts/EYPPSfWJOQ15ZDOw1D45yr51K1r2YMCsWG9HdQxwj1RJXnh6w3XX9WtzQeZPFC49k3rJ5zNFTOVtZg4RdTjjvYPyEWjFpWyNGq84\nhttps://creator.zohopublic.com/zoho_sam911/order-management/form-embed/lensproducts/PHj9AkzVg6jnyVZqa488TT4aNAdOTVv9gZUqVbAzFtnWmCkb3hjvXzYKXYnDbDHFU5zQDDhOPaDhHkxYfgrrDTSftfsGPQ5TWT8n"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 11,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u5165\u5e93",
+        "description": "",
+        "slug": "newinventory",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/form-embed/frameform/F6G66Q2ZBX3THxJEayOCkYyh7ZpmtG0HyPdtRUXVjggp0kGT5TnYeUMFhtAbsAUyJm7xjHVU67Q0KtMB6p7OtnZ5f1Y11PrC7u4S\nhttps://creator.zohopublic.com/zoho_sam911/order-management/form-embed/lensform/JAmJhFzU27MSbPfnrYSvRX93mtSd4tQVYK7W3Yr49EArMs97wzGB3AQvOGRZQC3Ask144dk3fQmgD0bhDa0kOmHOaqpH8xfPwJdp"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 12,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u76d8\u70b9",
+        "description": "",
+        "slug": "inventoryreviewform",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/form-embed/Master_Inventory_Review_Form/PwRXWZH97QBasfB7XHZTsvZEGQ5FKDwHT5WSWGQ1WKdH7yvjmJJVJNNCa9S2PWx250XdFuvnYHe71tFjHC8FNfJX73HNRn3QNrsz"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 13,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u5ba1\u67e5\u8bb0\u5f55",
+        "description": "\u81ea\u52a8\u8ba1\u7b97\u9500\u8d27\u548c\u4e58\u8d27",
+        "slug": "discrepancyrecords",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/Frame_Discrepancy_Report/v1pVCVkrJXrUebDwRVyYYmV75sTAkTFJVfp81Na3VGO0RvSQB7Ja8aUWTQV4dYr9zg0MEqTteQRqOCv5QyaMQyJZugZ4dbpHnguv"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 14,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u4ea7\u54c1",
+        "description": "",
+        "slug": "products",
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/Products_Report/Katy63BA2K2MATbuwPGXahJkRjXNXAZfvRPhJ3x70vFyWu6dEMVhUuk9wEzzCvVOdNFE9nde49PaPQmYwuJ2pqkw1zgHC1YU76b1\nhttps://creator.zohopublic.com/zoho_sam911/order-management/view-embed/products1_Report/D3OU18GsCBQng6KSqmABfyMatQT1AbFbhVKqB7a2t9UHNEzyhvt9M5G5j5k5F5HqMpWaRtXyJxFKm5d1Qkr05bGQ1wASG8xEtHdt"
+    }
+},
+{
+    "model": "zoho.page",
+    "pk": 15,
+    "fields": {
+        "level": "CHAIN_LEVEL",
+        "title": "\u89c6\u5149\u4e2d\u5fc3\u6587\u6863",
+        "description": "\u8fd0\u8425\u624b\u518c\u3001\u4eba\u529b\u8d44\u6e90\u3001\u653f\u7b56\u3001\u95ee\u9898\u89e3\u7b54",
+        "slug": "documents",
+        "iframe_urls": "documents.html"
+    }
+},
+{
+    "model": "stores.storepage",
+    "pk": 1,
+    "fields": {
+        "store": 1,
+        "page": 1,
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/view10/EYd3Ft0VJKj03HqykQqXDwZF6df2KJseCsksH1pfnr8d4NYEKarHnUah9r972ZfeDdP0pgPvudQnsj71DS5zbJY4VQ0bvGnW9r8b"
+    }
+},
+{
+    "model": "stores.storepage",
+    "pk": 2,
+    "fields": {
+        "store": 2,
+        "page": 1,
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/view11/wmXu9mM4dwqM5YHhdArOfUwNEOpqw8aP1wussG60MwMSXHOQE4GCjmvKwXPT9GYju7Cd1p4V2EU0hu9mdtY0MQBxY3BCYXRvF1qJ"
+    }
+},
+{
+    "model": "stores.storepage",
+    "pk": 3,
+    "fields": {
+        "store": 1,
+        "page": 4,
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/view/9zePvyPnfzpbg1PTfap5r2k8Hf39b2COg3N2sTgZC5aKsFOwr73sUhMz2TDSTfYgnfjsX7we5GCAMQpeaaUfhEZ6JaAOZXURnUaE"
+    }
+},
+{
+    "model": "stores.storepage",
+    "pk": 4,
+    "fields": {
+        "store": 2,
+        "page": 4,
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/view1/5TJmxGhnNMDF1ZAS5rCVYpHpUzyWCx22TMDsnfaw7ze9OhXp8Kz9wZwxaQXEjf8HpJB9qkFAphTupw9jvGsfCf8FB30tRgGHGh48"
+    }
+},
+{
+    "model": "stores.storepage",
+    "pk": 5,
+    "fields": {
+        "store": 3,
+        "page": 1,
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/view12/UYA9sxwEfw2N8s4zm5RsWzts8XBEg9qCBrO3JKg4E69B13D6BHybgaGm2ZOfZs3mVRWKkV4zXDEpp0VyTb0Sq8MQvwy0KujO6Zva"
+    }
+},
+{
+    "model": "stores.storepage",
+    "pk": 6,
+    "fields": {
+        "store": 3,
+        "page": 4,
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/view2/0E2KUXeDtMNPFja0XjqWmG7d9E0zZQVfE9YQCpyqh6bakRBYSpXM9YgwR957QgtyrVAV9KXg2GWpt5R5sbnErbSXKBQPGux5Y2h2"
+    }
+},
+{
+    "model": "stores.storepage",
+    "pk": 7,
+    "fields": {
+        "store": 4,
+        "page": 1,
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/view4/QvJECbUaHzHunkguaPDX2Qxp6KFvnAeD8DGz2gFdjVMzB5k5QZJmM4HHgNzx3SbrzzvbjHewYSyTpe3DFZyfHKNKZtMVFPhWW5ab"
+    }
+},
+{
+    "model": "stores.storepage",
+    "pk": 8,
+    "fields": {
+        "store": 4,
+        "page": 4,
+        "iframe_urls": "https://creator.zohopublic.com/zoho_sam911/order-management/view-embed/view13/uQPEnnX1W4xhPPE6O277f5hK3AxjJj8YPWGZppp032kBW2GrB9yYUJYqVbJeRHnk9342AzxKJp2vsT2MbQs5zZHYn2qtsmbxqSUB"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$srpNEVPvvOUg$NBMCQDQdK1CnmUB71lY+MKzRUN7dIvPCXhBiAWlWRUE=",
+        "last_login": "2017-05-04T12:24:12.395Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@admin",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2017-04-29T13:22:51.586Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$bZ5xCTsWncWF$0wr+lEuiK7DzFoCJOn/mW/2Bri1jnL4V5o3eTqG0ox8=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "MY",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2017-05-11T09:06:46Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$d2UFjCX8BSIb$ZrEXCeYVOA+hPNomUvZZWzDAiGOO4Ro6mwOgBp9X9ZA=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "SK",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2017-05-11T09:06:52Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$wYql7EdP1w63$xt2v1ztBy9KjViNNe2dNR9iP6aRQuoMYrjSfQSaNUb0=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "LWT",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-05-11T09:06:58Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$7at81T0QLxSz$bHxUF0AaAe035Uwodc3X+8U8+GeDdDuqdwS0EnNpzI0=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "ZJ",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-05-11T09:07:03Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "stores.store",
+    "pk": 1,
+    "fields": {
+        "region": 2,
+        "manager": 1,
+        "name": "\u79e6\u5b89"
+    }
+},
+{
+    "model": "stores.store",
+    "pk": 2,
+    "fields": {
+        "region": 2,
+        "manager": 1,
+        "name": "\u6c38\u5bff"
+    }
+},
+{
+    "model": "stores.store",
+    "pk": 3,
+    "fields": {
+        "region": 2,
+        "manager": 1,
+        "name": "\u957f\u6b66"
+    }
+},
+{
+    "model": "stores.store",
+    "pk": 4,
+    "fields": {
+        "region": 2,
+        "manager": 1,
+        "name": "\u5f6c\u53bf"
+    }
+},
+{
+    "model": "stores.region",
+    "pk": 2,
+    "fields": {
+        "manager": 1,
+        "name": "Region 1"
+    }
+}
+]

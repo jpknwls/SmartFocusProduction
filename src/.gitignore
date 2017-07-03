@@ -1,0 +1,9 @@
+*.pyc
+ubuntu-xenial-16.04-cloudimg-console.log
+
+.ropeproject
+settings.py
+ops/.vagrant
+ops/inventories/*
+!ops/inventories/_example*
+playbook.retry

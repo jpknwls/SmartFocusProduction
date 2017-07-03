@@ -1,0 +1,87 @@
+{% extends "page.html" %}
+
+{% comment %}
+Typical page showing a set of Zoho iframes.
+Expected context, in addition to extended templates:
+* {{ iframe_urls }}: A list of valid URLs to show in iframes
+{% endcomment %}
+
+{% block extra_head %}
+    {{ block.super }}
+
+    <style>
+        .iframe-page--not-configured > main {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .iframe-container {
+            flex: 1;
+            position: relative;
+        }
+        .iframe-container > iframe {
+            /* Make this iframe occupy all available space */
+            width: 100%; height: 100%;
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: 1;
+        }
+        .iframe-container > .loading-message,
+        .iframe-container > .not-configured-message {
+            width: 100%; height: 100%;
+
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 200%;
+            color: #aaa;
+            z-index: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block page_class %}
+    {% if not iframe_urls %}
+        iframe-page--not-configured
+    {% endif %}
+{% endblock %}
+
+{% block page_contents %}
+    {% for iframe_url in iframe_urls %}
+
+        <div class="iframe-container">
+
+        <!--   <div class="loading-message">
+                <p>
+                    Loading {{ page.title }}{% if page.level == "STORE_LEVEL" %} at
+                    {{ active_store }}{% endif %}…
+                </p>
+            </div>
+ -->
+            <iframe
+                frameborder="0"
+                allowTransparency="true"
+                scrolling="auto"
+                src="{{ iframe_url }}"></iframe>
+        </div>
+
+    {% empty %}
+
+        <div class="iframe-container">
+
+            <div class="not-configured-message">
+                <p>
+                    {{ page }}{% if page.level == "STORE_LEVEL" %}
+                    at {{ active_store }}{% endif %} has not been configured
+                </p>
+            </div>
+
+        </div>
+
+    {% endfor %}
+{% endblock %}
