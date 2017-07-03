@@ -101,6 +101,11 @@ def page(request,
         custom_template_path,
         'iframe_page.html',
     ]
+    if request.path.find('salescomparison') != -1:
+        templates_to_try = [
+        custom_template_path,
+        'comparison_page.html',
+        ]  
 
     return render(request, templates_to_try, dict(
         pages=_pages_by_slug(Page.objects.all()),
