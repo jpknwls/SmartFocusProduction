@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/src/
+    destination: /home/ubuntu/smartfocus-site/src/
 hooks:
   BeforeInstall:
     - location: deploy/before_install
