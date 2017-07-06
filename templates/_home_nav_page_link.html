@@ -12,7 +12,7 @@ Expected context:
 
     {# Page configured #}
 
-    <li class="{% if not page.slug in visible_pages %}disabled-nav-item{% endif %}">
+    <td class="{% if not page.slug in visible_pages %}disabled-nav-item{% endif %}">
         <a href="
             {% if page.slug in visible_pages %} 
                 {% if page.level == "STORE_LEVEL" %}
@@ -28,14 +28,14 @@ Expected context:
             <h2 class="title">{{ num }} {{ page.title }}</h2>
             <p class="desc">{{ page.description }}</p>
         </a>
-    </li>
+    </td>
 
 {% else %}
 
     {# Page exists in navigation but not configured in DB #}
     {# Show an error #}
 
-    <li class="disabled" title="Page not configured">
+    <td class="disabled" title="Page not configured">
         <a href="javascript: void 0;">
             <span class="glyphicon glyphicon-exclamation-sign"
                 aria-hidden="true"></span>
@@ -43,6 +43,6 @@ Expected context:
             <h2 class="title">{{ num }} 出错</h2>
             <p class="desc">Page not configured</p>
         </a>
-    </li>
+    </td>
 
 {% endif %}

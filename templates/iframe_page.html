@@ -10,6 +10,11 @@ Expected context, in addition to extended templates:
     {{ block.super }}
 
     <style>
+	html {
+	    overflow-x:hidden ;
+	    overflow-y:scroll ;
+
+	}
         .iframe-page--not-configured > main {
             justify-content: center;
             align-items: center;
@@ -66,8 +71,9 @@ Expected context, in addition to extended templates:
             <iframe
                 frameborder="0"
                 allowTransparency="true"
-                scrolling="auto"
-                src="{{ iframe_url }}"></iframe>
+                scrolling="no"
+                src="{{ iframe_url }}"
+		></iframe>
         </div>
 
     {% empty %}

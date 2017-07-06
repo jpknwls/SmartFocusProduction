@@ -3,33 +3,33 @@
 {% load static %}
 
 {% block main %}
-    <nav class="home-nav home-nav--bordered">
-        <ul>
+<table class="icon-grid">
+    <tr class="home-nav home-nav--bordered">
             {% include "_home_nav_page_link.html" with num=1 page=pages.patient %}
             {% include "_home_nav_page_link.html" with num=2 page=pages.exam %}
             {% include "_home_nav_page_link.html" with num=3 page=pages.sale %}
             {% include "_home_nav_page_link.html" with num=4 page=pages.salescomparison %}
 
-        </ul>
-    </nav>
-
-    <nav class="home-nav">
-        <ul>
-            {% include "_home_nav_page_link.html" with num=5 page=pages.newproduct %}
+        </tr>
+    <tr class="home-nav">
+             {% include "_home_nav_page_link.html" with num=5 page=pages.newproduct %}
             {% include "_home_nav_page_link.html" with num=6 page=pages.newinventory %}
-            {% include "_home_nav_page_link.html" with num=7 page=pages.inventoryreviewform %}
+             {% include "_home_nav_page_link.html" with num=7 page=pages.inventoryreviewform %}
             {% include "_home_nav_page_link.html" with num=8 page=pages.discrepancyrecords %}
-
-            {% include "_home_nav_page_link.html" with num=9 page=pages.products %}
-            {% include "_home_nav_page_link.html" with num=10 page=pages.lensinventory %}
-            {% include "_home_nav_page_link.html" with num=11 page=pages.documents %}
+	</tr>
+	<tr class="home-nav">
+             {% include "_home_nav_page_link.html" with num=9 page=pages.products %}
+             {% include "_home_nav_page_link.html" with num=10 page=pages.lensinventory %}
+             {% include "_home_nav_page_link.html" with num=11 page=pages.documents %} 
+	    <td>
               <a href="{% url "logout" %}">
                   <img src="{% static "images/logout.png" %}">
                   <h2 class="title">12 退出</h2>
-        </a>
-        </ul>
-    </nav>
+       	   </td>
+	 </a>
 
+        </tr>
+</table>
 
 <div class="container">
     <br />
@@ -169,10 +169,7 @@
         body > main {
             justify-content: stretch;
             align-items: stretch;
-        }
-        .home-nav {
-            padding: 1.5em;
-            margin: 1em;
+	    overflow-x: hidden;
         }
         .home-nav--bordered {
             border: 1px solid #ddd;
@@ -212,12 +209,41 @@
             font-weight: bold;
         }
         .home-nav p.desc {
-            margin: 0;
-            padding: 0;
+            margin: 0% 10% 0% 10%;;
+            padding: 2%;
             color: gray;
         }
+	.home-nav td img {
+		position: relative;
+		top: 2%;	
+	
+	}
+	.home-nav td {
+                width: 25%;
+
+        }
+	tr {
+		height: 30%;
+		min-height: 150px;
+		margin: 2% ;
+
+
+	}
+	.icon-grid {
+        	margin: 2% 0% 2% 0%;
+		width: 100%;
+		height: 100%;	
+		align-items: stretch;
+		overflow-x: hidden;
+	}
         li {
             list-style: none;
         }
+	_::-webkit-full-page-media, _:future, :root tr {
+	     height: 150px;
+	 }
+
+
+
     </style>
 {% endblock %}
