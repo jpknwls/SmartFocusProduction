@@ -55,11 +55,6 @@
 
         <li role="separator" class="divider"></li>
 
-        {% include "_top_nav_page_link.html" with page=pages.products %}
-        {% include "_top_nav_page_link.html" with page=pages.newproduct %}
-
-        <li role="separator" class="divider"></li>
-
         {% include "_top_nav_page_link.html" with page=pages.inventoryreviewform %}
         {% include "_top_nav_page_link.html" with page=pages.discrepancyrecords %}
     </ul>
@@ -85,7 +80,7 @@
         <li role="separator" class="divider"></li>
 
         {% if request.user.is_superuser %}
-        <li>
+        <li id="admin">
             <a href="{% url "admin:index" %}">
                 <span class="glyphicon glyphicon-cog"></span>
                 管理
