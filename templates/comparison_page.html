@@ -10,12 +10,12 @@ Expected context, in addition to extended templates:
     {{ block.super }}
 
     <style>
-      
+    /*  
         main {
                 height: 100%
                 overflow-y:scroll;
 
-        }
+        }*/
 
 
         .page > main {
@@ -40,7 +40,7 @@ Expected context, in addition to extended templates:
         }
         .iframe-container > iframe {
             /* Make this iframe occupy all available space */
-            width: 100%; height: 100%;
+            width: 100%; height: 130%;
             position: absolute;
             top: 0; right: 0; bottom: 0; left: 0;
             z-index: 1;
@@ -60,6 +60,10 @@ Expected context, in addition to extended templates:
             color: #aaa;
             z-index: 0;
         }
+        _::-webkit-full-page-media, _:future, :root .all-container {
+            height: 600px;
+
+        }
 
 
     </style>
@@ -72,18 +76,10 @@ Expected context, in addition to extended templates:
 {% endblock %}
 
 {% block page_contents %}
-
+<div class ="all-container">
 {% for iframe_url in iframe_urls %}
 
         <div class="iframe-container">
-
-            <!-- <div class="loading-message">
-                <p>
-                    Loading {{ page.title }}{% if page.level == "STORE_LEVEL" %} at
-                    {{ active_store }}{% endif %}…
-                </p>
-            </div>-->
-
             <iframe
                 frameborder="0"
                 allowTransparency="true"
@@ -97,6 +93,14 @@ Expected context, in addition to extended templates:
         <div class="iframe-container">
 
             <div class="not-configured-message">
+
+            <!-- <div class="loading-message">
+                <p>
+                    Loading {{ page.title }}{% if page.level == "STORE_LEVEL" %} at
+                    {{ active_store }}{% endif %}…
+                </p>
+            </div>-->
+
                 <p>
                     {{ page }}{% if page.level == "STORE_LEVEL" %}
                     at {{ active_store }}{% endif %} has not been configured
@@ -106,4 +110,5 @@ Expected context, in addition to extended templates:
         </div>
 
     {% endfor %}
+    </div>
 {% endblock %}
