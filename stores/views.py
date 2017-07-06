@@ -29,7 +29,7 @@ def require_store_association(view_func):
 
     def wrapper(request, *args, **kwargs):
         associated_stores = (
-            models.get_associated_stores(request.user).order_by('name'))
+            models.get_associated_stores(request.user).order_by('region'))
 
         if len(associated_stores) < 1:
             log.warning("No associated stores with UID %s", request.user.username)
