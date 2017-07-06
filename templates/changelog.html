@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}
+Changelog
+{% endblock %}
+
+{% block body %}
+<div class="update-list">
+    <div class="update-item">
+      
+        
+        
+        {% block log %}{% endblock %}
+        <p>
+        Version: 1.0
+	</p><p>
+        Updates: Update the front end descriptions, added Groups feature.
+
+        </p>
+        {% block return %}
+	<div class="buttons">
+            <a href="javascript: history.back()">Go back</a>
+            <a href="/">Go to the main page</a>
+	</div>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+    {{ block.super }}
+
+<style>
+
+* {
+box-sizing: border-box;
+}
+ 
+*:focus {
+    outline: none;
+}
+body {
+font-family: Arial;
+background-color: #2D499D; /*#3498DB; royal blue*/
+padding: 50px;
+}
+
+.update-list {
+margin: 20px auto;
+width: 400px;
+}
+
+.update-item {
+background-color: #FFF;
+padding: 20px;
+border-radius: 5px
+}
+ 
+.buttons {
+  align-horizontal: center;
+	margin: auto;
+}
+a {
+  border: 2px solid transparent;
+  background: #2D499D;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 10px 10px 10px 10px;
+  text-decoration: none;
+  text-shadow: none;
+  text-align: center;
+  border-radius: 3px;
+  box-shadow: none;
+  transition: 0.25s;
+  display: block;
+  width: 250px;
+  margin:  20px auto 20px auto;
+  justify-content: center;
+}
+ 
+a:hover {
+  background-color: #2980B9;
+}
+
+</style>
+
+{% endblock %}

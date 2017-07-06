@@ -22,6 +22,10 @@ urlpatterns = [
         auth_views.logout_then_login,
         name='logout'),
 
+    url(r'^changelog/',
+        login_required(views.changelog),
+        name='changelog'),
+
     url(r'^$',
         login_required(views.home),
         name='home'),

@@ -132,3 +132,12 @@ def _pages_by_slug(pages):
             level=obj.level,
         )
     return data
+
+
+@require_store_association
+@require_page_visibility
+def changelog(request, *args, **kwargs):
+    """
+    Main page with nav showing links to different pages.
+    """
+    return render(request, 'changelog.html')
