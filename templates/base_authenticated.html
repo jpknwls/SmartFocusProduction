@@ -71,6 +71,13 @@ to logged-in users should inherit from this template
             padding: 0;
             font-size: 80%;
         }
+
+        .nav-tabs.nav-justified>li {
+              display: table-cell;
+            width: 1%;
+
+        }
+
     </style>
 {% endblock %}
 
@@ -78,9 +85,11 @@ to logged-in users should inherit from this template
 
     <header>
         <nav>
+	   <div class ="tabs-wrap">
             <ul class="nav nav-tabs nav-justified">
                 {% include "_top_nav_contents.html" %}
             </ul>
+ 	   </div>
         </nav>
     </header>
 
