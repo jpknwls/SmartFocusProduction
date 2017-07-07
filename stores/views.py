@@ -31,6 +31,8 @@ def require_store_association(view_func):
         associated_stores = (
             models.get_associated_stores(request.user).order_by('region'))
 
+        print(associated_stores)
+        
         if len(associated_stores) < 1:
             log.warning("No associated stores with UID %s", request.user.username)
             raise exceptions.PermissionDenied()
