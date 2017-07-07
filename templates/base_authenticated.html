@@ -59,6 +59,15 @@ to logged-in users should inherit from this template
             cursor: default;
         }
 
+        .nav-tabs.nav-justified>li {
+              display: table-cell;
+            width: 1%;
+
+        }
+
+        li.divider {
+            display: list-item;
+        }
 
         /* Site-wide footer */
         body > footer {
@@ -72,11 +81,8 @@ to logged-in users should inherit from this template
             font-size: 80%;
         }
 
-        .nav-tabs.nav-justified>li {
-              display: table-cell;
-            width: 1%;
+        
 
-        }
 
     </style>
 {% endblock %}
