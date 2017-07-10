@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block main %}
+<div>
 <table class="icon-grid">
     <tr class="home-nav home-nav--bordered">
             {% include "_home_nav_page_link.html" with num=1 page=pages.patient %}
@@ -30,7 +31,7 @@
 
         </tr>
 </table>
-
+</div>
 <div class="container">
     <br />
     <br />
@@ -229,7 +230,10 @@
 	_::-webkit-full-page-media, _:future, :root tr {
 	     height: 150px;
 	 }
-
+i	.container {
+            position: relative;
+            top: 10%;
+        }
 
 
     </style>

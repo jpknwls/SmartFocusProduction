@@ -35,13 +35,13 @@ Expected context, in addition to extended templates:
             position: relative;
                 width: 90%;
                 justify-content: center;
-	        margin: 1%;
+	        margin: 2%;
                 min-height: 100%;
         }
         .iframe-container > iframe {
             /* Make this iframe occupy all available space */
-            width: 100%; min-height: 130%;
-            position: absolute;
+            width: 90%; min-height: 130%;
+            position: relative;
             top: 0; right: 0; bottom: 0; left: 0;
             z-index: 1;
         }
@@ -64,6 +64,7 @@ Expected context, in addition to extended templates:
       
         _::-webkit-full-page-media, _:future, :root main{
             height: 600px;
+		width: 100%;
 
         }
 
@@ -74,7 +75,9 @@ Expected context, in addition to extended templates:
             }
 
         }
-
+	iframe{
+	     overflow:hidden;
+	 } 
 
     </style>
 {% endblock %}
@@ -92,11 +95,12 @@ Expected context, in addition to extended templates:
             <iframe
                 frameborder="0"
                 allowTransparency="true"
-                scrolling="auto"
+                scrolling="no"
+		height = "500px"
                 src="{{ iframe_url }}">
             </iframe>
         </div>
-
+	<span style="min-height: 60px"></span>
     {% empty %}
 
         <div class="iframe-container">
